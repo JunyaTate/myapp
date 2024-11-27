@@ -8,27 +8,25 @@ import Learn from './Learn';
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Routes>
-          {/* メインページ */}
-          <Route
-            path="/"
-            element={
-              <>
-                <header className="App-header">
-                  <span className="header-back-button">
-                    <Link to="/learn">&lt;</Link> {/* Learnへのリンク */}
-                  </span>
-                  <h1>AIble Code</h1>
-                </header>
-                <AceEditorComponent />
-              </>
-            }
-          />
-          {/* Learnページ */}
-          <Route path="/learn" element={<Learn />} />
-        </Routes>
-      </div>
+      <Routes>
+        {/* メインページ */}
+        <Route
+          path="/"
+          element={
+            <div className="App"> {/*ヘッダー部分だけここで書いてます。ヘッダー下の要素はAceEditorComponentに書いてます*/}
+              <header className="App-header"> 
+                <span className="header-back-button">
+                  <Link to="/learn">&lt;</Link> {/* Learnへのリンク */}
+                </span>
+                <h1>AIble Code</h1>
+              </header>
+              <AceEditorComponent />
+            </div>
+          }
+        />
+        {/* Learnページ */}
+        <Route path="/learn" element={<Learn />} />
+      </Routes>
     </Router>
   );
 }

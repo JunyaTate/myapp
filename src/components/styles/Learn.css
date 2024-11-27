@@ -1,0 +1,82 @@
+/* Sidebar */
+.sidebar {
+    height: 100vh;  /* ビューポートの高さに合わせる */
+    width: 20%;   /* サイドバーの幅を増やす */
+    position: fixed; /* 固定位置 */
+    left: 0;        /* 左側に固定 */
+    top: 0;         /* 上部に固定 */
+    background-color: #2c3038;  /* 背景色 */
+    padding: 20px;  /* パディング */
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);  /* 影を追加 */
+    color: #ffffff;  /* 文字色を白に変更 */
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sidebar-title {
+    font-size: 1.5em; /* タイトルのフォントサイズ */
+    margin-bottom: 10px; /* 下にスペースを空ける */
+    border-bottom: 1px solid #ffffff; /* 下線を引く */
+    padding-bottom: 10px; /* パディングを追加 */
+}
+
+.sidebar-heading {
+    font-size: 1.2em; /* 見出しのフォントサイズ */
+    margin-bottom: 10px; /* 下にスペースを空ける */
+    border-bottom: 1px solid #ffffff; /* 下線を引く */
+    padding-bottom: 10px; /* パディングを追加 */
+}
+
+.sidebar ul {
+    list-style-type: none;  /* リストのマーカーを削除 */
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;  /* リストアイテム間のマージン */
+}
+
+.sidebar-footer { 
+    margin-top: auto; /* 自動的に上部にスペースを追加 */ 
+    padding-top: 10px; /* 上部にパディングを追加 */ 
+    padding-top: 10px; /* 上部にパディングを追加 */ 
+    text-align: center; /* 中央揃え */ 
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+} 
+
+.user-name { 
+    font-size : 1.2em;
+    font-weight: bold;
+    width:100%;
+    margin-bottom: 10px; /* 下にスペースを空ける */
+    border-bottom: 1px solid #d3d3d3; /* 上部に薄灰色の下線を追加 */ 
+    padding-bottom: 10px;
+} 
+
+.logout-button { 
+    background-color: #2c3038; /* ボタンの背景色 */
+    color: #ffffff; /* ボタンの文字色 */ 
+    border: none; /* ボーダーを削除 */ 
+    padding: 10px 20px; /* パディング */ 
+    cursor: pointer; /* カーソルをポインターに */ 
+    margin-bottom: 10px; /* 下にスペースを空ける */ 
+} 
+
+.github-link { 
+    color: #ffffff; /* リンクの文字色 */ 
+    text-decoration: none; /* 下線を削除 */ 
+    margin-bottom: 10px; /* 下にスペースを空ける */ 
+} 
+
+.credits { 
+    color: #d3d3d3; /* クレジットの文字色 */ 
+    font-size: 0.8em; /* フォントサイズ */
+}
+
+.learn-base {
+    background-color: #f8f9fa; /* 背景色 */
+    margin-left: 20%; /* サイドメニューと被らないように左マージンを追加 */
+}
