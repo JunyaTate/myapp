@@ -9,9 +9,8 @@ import 'brace/mode/java';
 
 const AceEditorComponent = () => {
 
-    //エディタのモードを状態として管理
-    const [mode,setMode] = useState("python");
-    const [selectedTab, setSelectedTab] = useState("問題");
+    const [mode,setMode] = useState("python"); //エディタのモードを状態として管理
+    const [selectedTab, setSelectedTab] = useState("問題"); //タブを状態として管理
     const [output, setOutput] = useState(""); // 出力結果を保存する状態
 
     //モード変更時に呼ばれる関数
@@ -38,6 +37,7 @@ const AceEditorComponent = () => {
     function onChange(newValue) {
         console.log('change', newValue);
     }
+
     return (
     <>
         <div className="editor-container">
