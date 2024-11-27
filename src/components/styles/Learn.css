@@ -19,6 +19,7 @@
     margin-bottom: 10px; /* 下にスペースを空ける */
     border-bottom: 1px solid #ffffff; /* 下線を引く */
     padding-bottom: 10px; /* パディングを追加 */
+    text-align: center; /* 中央揃え */ 
 }
 
 .sidebar-heading {
@@ -26,6 +27,7 @@
     margin-bottom: 10px; /* 下にスペースを空ける */
     border-bottom: 1px solid #ffffff; /* 下線を引く */
     padding-bottom: 10px; /* パディングを追加 */
+    
 }
 
 .sidebar ul {

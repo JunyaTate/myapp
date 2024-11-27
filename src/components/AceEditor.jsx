@@ -2,9 +2,14 @@ import React, { useState } from 'react';
 import AceEditor from 'react-ace';
 import Problem from './Problem';
 import './styles/AceEditor.css';
+import settingIcon from '../images/settingicon.png'
 
 import 'brace/mode/python';
 import 'brace/mode/java';
+import 'brace/theme/monokai';
+import 'brace/theme/github';
+import 'brace/theme/solarized_dark';
+import  'brace/theme/solarized_light';
 
 
 const AceEditorComponent = () => {
@@ -12,6 +17,10 @@ const AceEditorComponent = () => {
     const [mode,setMode] = useState("python"); //エディタのモードを状態として管理
     const [selectedTab, setSelectedTab] = useState("問題"); //タブを状態として管理
     const [output, setOutput] = useState(""); // 出力結果を保存する状態
+    const [theme, setTheme] = useState("monokai"); 
+    const [fontSize, setFontSize] = useState(14); 
+    const [tabSize, setTabSize] = useState(4); 
+    const [showSettings, setShowSettings] = useState(false);
 
     //モード変更時に呼ばれる関数
     const handleModeChange = (event) => {
@@ -31,7 +40,29 @@ const AceEditorComponent = () => {
     //タブ切り替え関数
     const handleTabClick = (tab) => {
         setSelectedTab(tab);
-    }
+    };
+
+    const handleSettingsClick = () => { 
+        setShowSettings(!showSettings); 
+    }; 
+    
+    const handleThemeChange = (event) => { 
+        setTheme(event.target.value); 
+    };  
+    
+    const handleTabSizeChange = (event) => { 
+        setTabSize(parseInt(event.target.value));
+    };
+
+    const closeSettings = () => {
+        setShowSettings(false);
+    };
+
+    const handleOverlayClick = (event) => {
+        if(event.target.className === 'popup-overlay') {
+            closeSettings();
+        }
+    };
 
     //なにこれ
     function onChange(newValue) {
@@ -64,6 +95,9 @@ const AceEditorComponent = () => {
                 <div className="editor-header">
                     <span className='editor-title'>コード</span>
                     {/*プルダウンメニューでモードを選択*/}
+                    <button className = "setting-button" onClick={handleSettingsClick}>
+                        <img src={settingIcon} alt="設定" />
+                    </button>   
                     <select className = "editor-mode-select" onChange={handleModeChange} value={mode}>
                         <option value="python">Python</option>
                         <option value="java">Java</option>
@@ -73,15 +107,15 @@ const AceEditorComponent = () => {
                     {/*エディタ設定*/}
                     <AceEditor
                         mode={mode} // モードを状態から取得
-                        theme="monokai" //monokaiテーマ
+                        theme={theme} //テーマ
                         onChange={onChange}
                         name="Editor"
                         width="100%"  // 親要素に収まるよう設定
                         height="100%" // 親要素に収まるよう設定
                         showGutter={true}
                         highlightActiveLine={true}
-                        fontSize={14}
-                        tabSize={4}
+                        fontSize={fontSize}
+                        tabSize={tabSize}
                         wrapEnabled={true}
                         style={{ flex: 1 }} // Flexboxの影響を受けるように
                     />
@@ -99,6 +133,44 @@ const AceEditorComponent = () => {
                     </div>
                 </div>
             </div>
+
+            {showSettings && (
+                <div className='popup-overlay' onClick={handleOverlayClick}>
+                    <div className='popup-settings'>
+                        <div className='popup-header'>
+                            <button className='close-button' onClick={closeSettings}>✕</button>
+                            <h3>エディタ設定</h3>
+                        </div>
+                        <div className='popup-content'>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                                <span>テーマ:</span>
+                                <select value={theme} onChange={handleThemeChange} className='editor-mode-select'>
+                                    <option value="monokai">monokai</option>
+                                    <option value="solarized_dark">solarized_dark</option>
+                                    <option value="solarized_light">solarized_light</option>
+                                    <option value="github">github</option>
+                                </select>
+                            </div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                                <span>タブ幅:</span>
+                                <select value={tabSize} onChange={handleTabSizeChange} className="editor-mode-select">
+                                    <option value={2}>2</option>
+                                    <option value={4}>4</option>
+                                    <option value={8}>8</option>
+                                </select>
+                            </div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <span>フォントサイズ:</span>
+                                <div className="font-mode-select" style={{ display: 'flex', alignItems: 'center' }}>
+                                    <button onClick={() => setFontSize(fontSize - 1)}>-</button>
+                                    <span className="font-size-display" style={{ margin: '0 10px' }}>{fontSize}</span>
+                                    <button onClick={() => setFontSize(fontSize + 1)}>+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     )
 };

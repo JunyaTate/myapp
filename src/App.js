@@ -11,7 +11,7 @@ function App() {
       <Routes>
         {/* メインページ */}
         <Route
-          path="/"
+          path="/problem"
           element={
             <div className="App"> {/*ヘッダー部分だけここで書いてます。ヘッダー下の要素はAceEditorComponentに書いてます*/}
               <header className="App-header"> 
