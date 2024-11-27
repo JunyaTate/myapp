@@ -1,0 +1,137 @@
+/*左側のスタイル*/
+.left-side-space { 
+  width: 50%; 
+  background-color: #2c3038; 
+  padding: 20px; color: #ddd; 
+  display:flex; 
+  flex-direction: column; 
+  overflow:auto; 
+  border-right: 5px solid #4D5362; 
+} 
+
+.left-tab-container { 
+  display:flex; 
+  border-left:3px solid #4D5362; 
+} 
+
+.left-tab1, .left-tab2 { 
+  padding: 10px 20px; 
+  cursor:pointer; 
+  display: flex; 
+  align-items: center; 
+  border-right: 3px solid #4D5362; 
+  flex:1;
+  position : relative;
+} 
+
+.tab-divider { 
+  width: 3px; 
+  height: 100%; 
+  background-color: #4D5362; 
+} 
+
+.left-tab-selected::after {
+  content: ""; /* 擬似要素で下線を作成 */
+  position: absolute;
+  bottom: 0; /* タブの下端に配置 */
+  left: 10px; /* 左側のグレー線から5pxの余白を取る */
+  right: 10px; /* 右側のグレー線から5pxの余白を取る */
+  height: 2px; /* 下線の太さ */
+  background-color: white; /* 下線の色 */
+  border-radius: 1.5px; /* 下線の角を少し丸くする */
+}
+
+.tab-content-container { 
+  margin-top: 10px; 
+} 
+
+.tab-content { 
+  padding: 20px;
+}
+
+
+/* 右側のエディタ部分 */
+.editor {
+  width: 50%; /* 右側の幅を50% */
+  background-color: #2c3038;
+  padding: 20px;
+  display: flex; /* FlexboxでAce Editorを管理 */
+  flex-direction: column; /* 縦方向の配置 */
+  height: 100%; /* 親の高さを継承 */
+}
+
+/* エディタのヘッダー */
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.editor-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+}
+
+.editor-mode-select {
+  padding: 5px 10px;
+  border-radius: 16px; /* 角を丸くする */
+  border: none;
+  font-size: 14px;
+  background-color: #4d5362; /* 背景色 */
+  color: white; /* 文字色 */
+  cursor: pointer;
+}
+
+.editor-mode-select:hover {
+  background-color: #3c4b5a;
+}
+
+/* 入力出力表示エリア */
+.io-container {
+  background-color: #1a2a3d;
+  color: white;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px; /* 角を丸くする */
+  min-height: 80px;
+}
+
+/* ボタンコンテナ */
+.button-container {
+  display: flex;
+  justify-content: flex-end; /* 右寄せ */
+  margin-top: 10px;
+}
+
+/* 実行ボタンと提出ボタン */
+.submit-button {
+  padding: 8px 20px;
+  margin-left: 10px; /* ボタン間にスペース */
+  background-color: #79A8FF; /* ボタンの背景色 */
+  color: white;
+  border: none;
+  border-radius: 16px; /* 角を丸くする */
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.run-button{
+  padding: 8px 20px;
+  margin-left: 10px; /* ボタン間にスペース */
+  background-color: #ffffff; /* ボタンの背景色 */
+  color: #5691d4;
+  border: none;
+  border-radius: 16px; /* 角を丸くする */
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #5691d4; /* ホバー時の色 */
+}
+
+.run-button:hover{
+  background-color: #d4d4d4;
+}

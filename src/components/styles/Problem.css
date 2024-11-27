@@ -1,0 +1,106 @@
+/*問題コンテナ*/
+.problem-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    padding: 0;
+    color: #ddd;
+    background-color: #2c3038;
+    overflow: hidden; /* コンテナ全体にスクロールを発生させない */
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/*タブ下の区切り線*/
+.problem-divider {
+    height: 3px;
+    background-color: #4D5362;
+    margin: 10px 0;
+}
+
+/*問題タイトル*/
+.problem-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: left;
+    padding: 5px 0;
+    color: white;
+    margin-bottom: 2px;
+}
+
+/*問題下の区切り線*/
+.problem-title-divider {
+    height: 3px;
+    background-color: #4D5362;
+    margin-bottom: 10px;
+}
+
+/*以下問題内容の部分*/
+.problem-section {
+    flex-grow: 1; /* 高さを均等に分配 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 内容を縦方向に中央揃え */
+    align-items: flex-start;
+    padding: 10px; /* 必要に応じて調整 */
+    box-sizing: border-box;
+    overflow: hidden; /* スクロールを防止 */
+}
+
+.problem-section-title {
+    font-size: 20px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.problem-description {
+    font-size: 16px;
+    line-height: 1.4;
+    color: #ddd;
+}
+
+.problem-sample {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* サンプル内の要素を均等に配置 */
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.problem-sample-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-grow: 1;
+}
+
+.problem-sample-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 48%;
+}
+
+.problem-sample-code-title,
+.problem-sample-output-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #bbb;
+    margin-bottom: 5px; /* コンテンツとの間隔 */
+}
+
+.problem-sample-code,
+.problem-sample-output {
+    padding: 10px;
+    background-color: #272822;
+    color: white;
+    border-radius: 5px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.problem-sample-content {
+    white-space: pre-wrap;
+}
