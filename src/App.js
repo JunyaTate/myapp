@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import AceEditorComponent from './components/AceEditor.jsx';
 import './components/styles/App.css';
 
@@ -11,7 +11,7 @@ function App() {
       <Routes>
         {/* メインページ */}
         <Route
-          path="/problem"
+          path="/problem/:categoryId/:problemId"
           element={
             <div className="App"> {/*ヘッダー部分だけここで書いてます。ヘッダー下の要素はAceEditorComponentに書いてます*/}
               <header className="App-header"> 
