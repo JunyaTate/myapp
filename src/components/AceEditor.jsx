@@ -14,50 +14,69 @@ import  'brace/theme/solarized_light';
 
 const AceEditorComponent = () => {
 
-    const [mode,setMode] = useState("python"); //エディタのモードを状態として管理
-    const [selectedTab, setSelectedTab] = useState("問題"); //タブを状態として管理
+    //Stateちゃんたち↓
+    const [mode,setMode] = useState("python"); //エディタのモードを状態として管理(デフォルトはpython)
+    const [selectedTab, setSelectedTab] = useState("問題"); //タブを状態として管理（デフォルトは問題タブ）
     const [output, setOutput] = useState(""); // 出力結果を保存する状態
-    const [theme, setTheme] = useState("monokai"); 
-    const [fontSize, setFontSize] = useState(14); 
-    const [tabSize, setTabSize] = useState(4); 
-    const [showSettings, setShowSettings] = useState(false);
+    const [theme, setTheme] = useState("monokai"); //テーマの状態(デフォルトはmonokai)
+    const [fontSize, setFontSize] = useState(14); //フォントサイズの状態(デフォルトは14)
+    const [tabSize, setTabSize] = useState(4); //タブサイズの状態(デフォルトは4)
+    const [showSettings, setShowSettings] = useState(false); //設定画面を表示するかどうかの状態
+
+    //Handleちゃんたち↓
+
+    //フォントサイズ管理
+    const handleFontSizeIncrease = () => {
+        setFontSize(prevFontSize => Math.min(prevFontSize + 1,99)); //最大を99にしてます
+    }
+
+    const handleFontSizeDecrease = () => {
+        setFontSize(prevFontSize => Math.max(prevFontSize - 1,1)); //最小を1にしてます
+    }
 
     //モード変更時に呼ばれる関数
     const handleModeChange = (event) => {
         setMode(event.target.value);
     }
 
+    //実行ボタン
     const handleRun = () => {
         const result = "実行結果例"; // 実際の実行結果をここに設定 
         setOutput(result);
         console.log('Run button clicked');
     };
 
+    //提出ボタン
     const handleSubmit = () => {
         console.log('Submit button clicked');
     };
 
-    //タブ切り替え関数
+    //タブ切り替え（問題と結果一覧タブ）
     const handleTabClick = (tab) => {
         setSelectedTab(tab);
     };
 
+    //設定ボタン
     const handleSettingsClick = () => { 
         setShowSettings(!showSettings); 
     }; 
     
+    //テーマ切り替え
     const handleThemeChange = (event) => { 
         setTheme(event.target.value); 
     };  
     
+    //タブサイズ
     const handleTabSizeChange = (event) => { 
         setTabSize(parseInt(event.target.value));
     };
 
+    //設定画面を閉じるボタン
     const closeSettings = () => {
         setShowSettings(false);
     };
 
+    //設定画面を閉じるエリア（ポップアップ外側をクリックしたら設定を閉じるようにしてます）
     const handleOverlayClick = (event) => {
         if(event.target.className === 'popup-overlay') {
             closeSettings();
@@ -69,6 +88,7 @@ const AceEditorComponent = () => {
         console.log('change', newValue);
     }
 
+    //コンポーネントを返す
     return (
     <>
         <div className="editor-container">
@@ -114,10 +134,13 @@ const AceEditorComponent = () => {
                         height="100%" // 親要素に収まるよう設定
                         showGutter={true}
                         highlightActiveLine={true}
-                        fontSize={fontSize}
-                        tabSize={tabSize}
+                        fontSize={fontSize} //fontSizeから数値を受け取る
+                        tabSize={tabSize}   //tabSizeから数値を受け取る
                         wrapEnabled={true}
                         style={{ flex: 1 }} // Flexboxの影響を受けるように
+                        setOptions={{
+                            tabSize: tabSize, //tabSizeの変更を確定させる...?
+                        }}
                     />
 
                 {/*入出力の表示部分*/}
@@ -134,6 +157,7 @@ const AceEditorComponent = () => {
                 </div>
             </div>
 
+            {/* 設定画面 */}
             {showSettings && (
                 <div className='popup-overlay' onClick={handleOverlayClick}>
                     <div className='popup-settings'>
@@ -162,9 +186,9 @@ const AceEditorComponent = () => {
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <span>フォントサイズ:</span>
                                 <div className="font-mode-select" style={{ display: 'flex', alignItems: 'center' }}>
-                                    <button onClick={() => setFontSize(fontSize - 1)}>-</button>
+                                    <button onClick={handleFontSizeDecrease}>-</button>
                                     <span className="font-size-display" style={{ margin: '0 10px' }}>{fontSize}</span>
-                                    <button onClick={() => setFontSize(fontSize + 1)}>+</button>
+                                    <button onClick={handleFontSizeIncrease}>+</button>
                                 </div>
                             </div>
                         </div>

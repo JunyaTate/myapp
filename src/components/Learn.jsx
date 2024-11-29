@@ -2,7 +2,7 @@ import React from "react";
 import "./styles/Learn.css";
 import { Link } from 'react-router-dom'
 
-const LearnComponent = ({goToApp}) => {
+const LearnComponent = () => {
     return (
         <>
             <div className="sidebar">
@@ -22,7 +22,7 @@ const LearnComponent = ({goToApp}) => {
             <div className="learn-base">
                 <h1>Learn</h1>
                 <p>This is the Learn page content.</p>
-                <Link to="/problem"><button>Go to Problem</button></Link>
+                <Link to="/problem"><button>Go to /Problem</button></Link>
             </div>
         </>
     );
