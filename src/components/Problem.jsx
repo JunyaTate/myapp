@@ -1,4 +1,13 @@
-import React from 'react';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
+import 'katex/dist/katex.min.css';
+import ReactMarkdown from 'react-markdown';
+import rehypeKatex from 'rehype-katex';
+import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+
 //import AceEditor from 'react-ace';
 import './styles/Problem.css'; // スタイルを外部ファイルで管理
 
@@ -6,65 +15,54 @@ import './styles/Problem.css'; // スタイルを外部ファイルで管理
 import 'brace/theme/monokai';
 
 const Problem = () => {
+  const { categoryId, problemId } = useParams();
+  const [problemData, setProblemData] = useState(null); // 問題データの状態管理
+  const [loading, setLoading] = useState(true); // ローディング状態
+  const [error, setError] = useState(null); // エラー状態
+
+  useEffect(() => {
+    // 問題データを取得するAPI呼び出し
+    async function fetchProblem() {
+      try {
+        setLoading(true);
+        const response = await axios.get(`http://localhost:8000/problem/${categoryId}/${problemId}`);
+        setProblemData(response.data); // 問題データを状態に設定
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchProblem();
+  }, [categoryId, problemId]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  if (!problemData) {
+    return <div>No data found for Problem ID: {problemId}</div>;
+  }
+
   return (
     <div className="problem-container">
       {/* タイトル部分 */}
       <div>
         <div className="problem-divider"></div>
-        <h2 className="problem-title">2.01 - 大人 or 子供</h2>
+        <h2 className="problem-title">{problemData.title}</h2>
         <div className="problem-title-divider"></div>
       </div>
 
-      {/* 問題文 */}
-      <div className="problem-section">
-        <h3 className="problem-section-title">問題文</h3>
-        <p className="problem-description">
-        太郎くんの年齢は現在n歳です。太郎君が18歳以上ならば Adult 、 18歳未満ならば Child を返す関数 is_adult を実装してください。
-        </p>
-      </div>
+      <ReactMarkdown remarkPlugins={[remarkMath, remarkGfm]} rehypePlugins={[rehypeKatex]}>
+        {problemData.statement}
+      </ReactMarkdown>
+    </div>
+  );
+}
 
-      {/* 入力 */}
-      <div className="problem-section">
-        <h3 className="problem-section-title">入力</h3>
-        <p className="problem-description">
-          入力は以下の形式で引数から与えられます。
-        </p>
-      </div>
-
-      {/* 出力 */}
-      <div className="problem-section">
-        <h3 className="problem-section-title">出力</h3>
-        <p className="problem-description">
-          答えを戻り値として返してください。
-        </p>
-      </div>
-
-        {/* サンプル */}
-        <div className="problem-sample">
-                        <h3 className="problem-section-title">サンプル 1</h3>
-                        <div className="problem-sample-container">
-                            <div className="problem-sample-item">
-                                <div className="problem-sample-code-title">コード使用例</div>
-                                <div className="problem-sample-code">
-                                    <pre className="problem-sample-content">
-                                        {`入力: 18
-        出力: 大人`}
-                                    </pre>
-                                </div>
-                            </div>
-                            <div className="problem-sample-item">
-                                <div className="problem-sample-output-title">出力例</div>
-                                <div className="problem-sample-output">
-                                    <pre className="problem-sample-content">
-                                        {`入力: 17
-        出力: 子供`}
-                                    </pre>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
-        };
-
-        export default Problem;
+export default Problem;
