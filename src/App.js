@@ -1,9 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import AceEditorComponent from './components/AceEditor.jsx';
+import Login from './components/Login.jsx';
 import './components/styles/App.css';
+import ace from 'brace'
 
-import Learn from './Learn';
+import Learn from './components/Learn.jsx';
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
         />
         {/* Learnページ */}
         <Route path="/learn" element={<Learn />} />
+        {/* Loginページ */}
+        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   );

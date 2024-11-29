@@ -1,12 +1,15 @@
 import React from 'react';
 //import AceEditor from 'react-ace';
 import './styles/Problem.css'; // スタイルを外部ファイルで管理
+import './styles/App.css';
+import ace from 'brace'
 
 
 import 'brace/theme/monokai';
 
 const Problem = () => {
   return (
+    
     <div className="problem-container">
       {/* タイトル部分 */}
       <div>
