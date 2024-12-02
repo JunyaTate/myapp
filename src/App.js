@@ -2,8 +2,25 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import AceEditorComponent from './components/AceEditor.jsx';
 import Login from './components/Login.jsx';
+
 import './components/styles/App.css';
-import ace from 'brace'
+import './components/styles/AceEditor.css';
+import './components/styles/Problem.css';
+import './components/styles/Login.css';
+import './components/styles/Learn.css';
+import './components/styles/Editor.css';
+
+// AceEditorに必要なライブラリをインポート
+import 'ace-builds/src-noconflict/ace';
+
+import 'ace-builds/src-noconflict/mode-python';
+import 'ace-builds/src-noconflict/mode-java';
+
+import 'ace-builds/src-noconflict/theme-monokai';
+import 'ace-builds/src-noconflict/theme-github';
+import 'ace-builds/src-noconflict/theme-solarized_dark';
+import 'ace-builds/src-noconflict/theme-solarized_light';
+
 
 import Learn from './components/Learn.jsx';
 
@@ -16,7 +33,7 @@ function App() {
           path="/problem"
           element={
             <div className="App"> {/*ヘッダー部分だけここで書いてます。ヘッダー下の要素はAceEditorComponentに書いてます*/}
-              <header className="App-header"> 
+              <header className="App-header">
                 <span className="header-back-button">
                   <Link to="/learn">&lt;</Link> {/* Learnへのリンク */}
                 </span>
