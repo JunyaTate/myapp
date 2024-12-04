@@ -25,7 +25,7 @@ const Problem = () => {
     async function fetchProblem() {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:8000/problem/${categoryId}/${problemId}`);
+        const response = await axios.get(`https://api.aiblecode.net/api/problem/${categoryId}/${problemId}`);
         setProblemData(response.data); // 問題データを状態に設定
       } catch (err) {
         setError(err);
@@ -54,14 +54,14 @@ const Problem = () => {
     <div className="problem-container">
       {/* タイトル部分 */}
       <div>
-        <div className="problem-divider"></div>
         <h2 className="problem-title">{problemData.title}</h2>
-        <div className="problem-title-divider"></div>
       </div>
 
+      <div className="problem-statement">
       <ReactMarkdown remarkPlugins={[remarkMath, remarkGfm]} rehypePlugins={[rehypeKatex]}>
         {problemData.statement}
       </ReactMarkdown>
+      </div>
     </div>
   );
 }
