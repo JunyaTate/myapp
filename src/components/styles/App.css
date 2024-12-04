@@ -1,91 +1,79 @@
-/*global reset*/
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-/* ページ全体の背景色 */
 .App {
-  background-color: #2c3038; /* 濃い紺色 */
-  height: 100vh; /* 画面全体を使用 */
   display: flex;
-  flex-direction: column; /* 横並びに変更 */
-  font-family: Arial, sans-serif;
-  color: white;
-  padding: 20px; /* ページ周りに余白を追加 */
-  margin:0;
-  overflow:hidden;
+  flex-direction: column;
+  background-color: #2c3038;
 }
 
-/* ヘッダーのスタイル */
 .App-header {
   background-color: #2c3038;
-  height: 60px; /* ヘッダーの高さを固定 */
-  width: 100%; /* 幅を全画面に広げる */
+  height: 60px; 
+  width: 100%; 
   display: flex;
-  align-items: center; /* 垂直方向中央寄せ */
-  justify-content: flex-start; /* 水平方向左寄せ */
-  font-size: calc(10px + 2vmin); /* テキストのサイズ */
+  align-items: center; 
+  justify-content: flex-start; 
+  font-size: calc(10px + 2vmin); 
   color: white;
-  padding: 0 20px; /* 左右の余白を追加 */
-  box-sizing: border-box; /* サイズ計算にパディングを含める */
+  padding: 0 20px; 
+  box-sizing: border-box; 
 }
 
-/* 戻るボタンのスタイル */
 .header-back-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin); /* 文字サイズに合わせる */
-  color: #79A8FF; /* ボタンの色 */
-  cursor: pointer; /* マウスポインタを変更 */
-  margin-right: 10px; /* テキストとの間隔 */
-  user-select: none; /* テキスト選択を無効化 */
-  line-height: 1; /* 縦方向中央揃え */
+  font-size: calc(10px + 2vmin); 
+  color: #79A8FF; 
+  cursor: pointer; 
+  margin-right: 10px; 
+  user-select: none; 
+  line-height: 1; 
 }
 
 .header-back-button:hover {
-  color: #5691d4; /* ホバー時の色 */
+  color: #5691d4;
 }
 
-/* ヘッダーのタイトル */
 .App-header h1 {
   position: relative;
-  display: inline-block; /* 必要な分だけ幅を確保 */
+  display: inline-block;
   margin: 0;
   padding: 0;
-  font-size: calc(10px + 2vmin); /* ヘッダーの文字サイズ */
+  font-size: calc(10px + 2vmin);
 }
 
 .App-header h1::after {
-  content: ''; /* 擬似要素で線を描画 */
+  content: '';
   position: absolute;
-  bottom: -3px; /* 文字のすぐ下 */
+  bottom: -3px;
   left: 0;
-  width: 100%; /* 文字幅に合わせる */
-  height: 3px; /* 線の太さ */
-  background-color: white; /* 線の色 */
+  width: 100%;
+  height: 3px;
+  background-color: white;
 }
 
-/* コンテナ全体のレイアウト（エディタと左側スペース） */
-.editor-container {
-  display: flex; /* 横並び */
-  width: 100%; /* 横幅100% */
-  height: calc(100% - 60px); /* 高さをヘッダーを引いた高さに */
-  max-width: 100%; /* 最大幅 */
-  background-color: #1a2a3d; /* 背景色を濃い紺色 */
-  border-radius: 10px;
-  overflow: hidden;
-  margin-bottom: 0;
-}
-
-/* Learnへのリンクのカスタムスタイル */
 .header-back-button a {
-  text-decoration: none; /* 下線を消す */
-  color: inherit; /* 色を継承 */
+  text-decoration: none; 
+  color: inherit; 
 }
 
 .header-back-button a:visited {
-  color: inherit; /* 訪問済みリンクの色も継承 */
+  color: inherit; 
 }
+
+
+/*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*/

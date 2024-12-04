@@ -9,10 +9,10 @@ import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 
 //import AceEditor from 'react-ace';
+
 import './styles/Problem.css'; // スタイルを外部ファイルで管理
+import './styles/App.css';
 
-
-import 'brace/theme/monokai';
 
 const Problem = () => {
   const { categoryId, problemId } = useParams();
@@ -50,6 +50,7 @@ const Problem = () => {
   }
 
   return (
+    
     <div className="problem-container">
       {/* タイトル部分 */}
       <div>
