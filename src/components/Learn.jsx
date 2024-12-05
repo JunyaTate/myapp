@@ -1,13 +1,29 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Login from './Login.jsx'; // 名前とパスが正しいことを確認
 
 const LearnComponent = () => {
   const [showLoginForm, setLoginForm] = useState(false);
+  const [categoryList, setCategoryList] = useState([]);
 
   const handleLoginClick = () => {
-    setLoginForm(!showLoginForm); 
+    setLoginForm(!showLoginForm);
   };
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get('https://api.aiblecode.net/api/category_list');
+        setCategoryList(response.data);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+
+    fetchCategories();
+  }, []);
 
   return (
     <>
@@ -15,8 +31,9 @@ const LearnComponent = () => {
         <h1 className="sidebar-title">AIbleCode</h1>
         <h2 className="sidebar-heading">学習</h2>
         <ul>
-          <li>リーダブルコード入門</li>
-          <li>デザインパターン入門</li>
+          {categoryList.map((category) => (
+            <li key={category.id}>{category.title}</li>
+          ))}
         </ul>
         <div className="sidebar-footer">
           <p className="user-name">guest_user</p>
@@ -35,4 +52,4 @@ const LearnComponent = () => {
   );
 }
 
-export default LearnComponent; // ここでもエクスポートを確認
+export default LearnComponent;
