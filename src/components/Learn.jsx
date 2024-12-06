@@ -27,9 +27,9 @@ const LearnComponent = () => {
         </div>
       </div>
       <div className="learn-base">
-        <h1>Learn</h1>
+        <h1>学習</h1>
         <p>This is the Learn page content.</p>
-        <Link to="/problem"><button>Go to /Problem</button></Link>
+        <Link to="/problem/00_tutorial/problem_a"><button>Go to /Problem/00_tutorial/problem_a</button></Link>
       </div>
     </>
   );

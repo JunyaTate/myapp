@@ -30,23 +30,15 @@
     align-items: flex-start;
 }
 
-.problem-statement h3{
-    display : inline;
-    margin-top : 20px;
-}
-
-.problem-statement pre {
-    display: block;
-    vertical-align: top; /* 上揃え */
-    margin-top: 0px;
+.problem-statement h3, .problem-statement pre { 
+    display: inline-block; 
+    vertical-align: top; /* 上揃え */ 
     margin-right: 10px; /* 間隔を調整 */
-    margin : 0 0 20px;
 }
 
 .problem-statement pre {
     background-color: black;
 }
-
 
 .problem-statement h2{
     margin-top: 20px;
