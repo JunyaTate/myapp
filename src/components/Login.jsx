@@ -1,13 +1,12 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-const Login = ({ setLoginForm }) => {
+const Login = ({ setLoginForm, checkAuthentication }) => {
   const [activeTab, setActiveTab] = useState('login'); // 'login' or 'signup'
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const closeLoginForm = () => {
     setLoginForm(false);
@@ -35,6 +34,7 @@ const Login = ({ setLoginForm }) => {
         // ログイン成功時の処理（例: トークンの保存など）
         console.log('Login successful:', response.data);
         closeLoginForm();
+        // Call the checkAuthentication function passed from parent component
         checkAuthentication();
       }
     } catch (err) {
@@ -42,28 +42,6 @@ const Login = ({ setLoginForm }) => {
       console.error('Login error:', err);
     }
   };
-
-  const checkAuthentication = async () => {
-    try {
-      const response = await axios.get('https://api.aiblecode.net/api/is_authenticated', {
-        withCredentials: true // クッキーを送信するために追加
-      });
-      if (response.status === 200 && response.data.is_authenticated) {
-        console.log('User is authenticated:', response.data);
-        setIsAuthenticated(true);
-      } else {
-        console.log('User is not authenticated:', response.data);
-        setIsAuthenticated(false);
-      }
-    } catch (err) {
-      console.error('Authentication check error:', err);
-      setIsAuthenticated(false);
-    }
-  };
-
-  useEffect(() => {
-    checkAuthentication();
-  }, []);
 
   return (
     <div className='login-popup-overlay' onClick={handleOverlayClick}>
@@ -132,7 +110,6 @@ const Login = ({ setLoginForm }) => {
             </>
           )}
         </div>
-        {isAuthenticated && <p className='authenticated-message'>ユーザーは認証されています。</p>}
       </div>
     </div>
   );

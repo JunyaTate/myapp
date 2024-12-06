@@ -1,28 +1,72 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Login from './Login.jsx'; // 名前とパスが正しいことを確認
+import Login from './Login.jsx';
 
 const LearnComponent = () => {
   const [showLoginForm, setLoginForm] = useState(false);
   const [categoryList, setCategoryList] = useState([]);
+  const [problemList, setProblemList] = useState([]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [username, setUsername] = useState('guest_user');
 
   const handleLoginClick = () => {
     setLoginForm(!showLoginForm);
   };
 
+  const handleLogoutClick = async () => {
+    try {
+      await axios.post('https://api.aiblecode.net/api/logout', {}, { withCredentials: true });
+      setIsAuthenticated(false);
+      setUsername('guest_user');
+      console.log('Logout successful');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
+
+  const checkAuthentication = async () => {
+    try {
+      const authResponse = await axios.get('https://api.aiblecode.net/api/is_authenticated', { withCredentials: true });
+      setIsAuthenticated(authResponse.data.is_authenticated);
+      
+      if (authResponse.data.is_authenticated) {
+        const userListResponse = await axios.get('https://api.aiblecode.net/api/user_list', { withCredentials: true });
+        
+        if (userListResponse.data && userListResponse.data.length > 0) {
+          setUsername(userListResponse.data[0].username || 'guest_user');
+        } else {
+          setUsername('guest_user');
+        }
+      } else {
+        setUsername('guest_user');
+      }
+    } catch (error) {
+      console.error('Authentication check error:', error);
+      setIsAuthenticated(false);
+      setUsername('guest_user');
+    }
+  };
+
   useEffect(() => {
-    const fetchCategories = async () => {
+    checkAuthentication();
+  }, []);
+
+  useEffect(() => {
+    const fetchCategoriesAndProblems = async () => {
       try {
-        const response = await axios.get('https://api.aiblecode.net/api/category_list');
-        setCategoryList(response.data);
+        // Fetch categories
+        const categoriesResponse = await axios.get('https://api.aiblecode.net/api/category_list');
+        setCategoryList(categoriesResponse.data);
+
+        // Fetch problem lists
+        const problemListResponse = await axios.get('https://api.aiblecode.net/api/problem_list');
+        setProblemList(problemListResponse.data);
       } catch (error) {
-        console.error('Error fetching categories:', error);
+        console.error('Error fetching categories or problems:', error);
       }
     };
-
-
-    fetchCategories();
+    fetchCategoriesAndProblems();
   }, []);
 
   return (
@@ -36,20 +80,40 @@ const LearnComponent = () => {
           ))}
         </ul>
         <div className="sidebar-footer">
-          <p className="user-name">guest_user</p>
-          <button className="logout-button" onClick={handleLoginClick}>ログイン</button>
-          {showLoginForm && <Login setLoginForm={setLoginForm} />} {/* ログインフォームの表示/非表示 */}
+          <p className="user-name">{username}</p>
+          {isAuthenticated ? (
+            <button className="logout-button" onClick={handleLogoutClick}>ログアウト</button>
+          ) : (
+            <button className="logout-button" onClick={handleLoginClick}>ログイン</button>
+          )}
+          {showLoginForm && <Login setLoginForm={setLoginForm} checkAuthentication={checkAuthentication} />}
           <a className="github-link" href="https://github.com/your-repo" target="_blank" rel="noopener noreferrer">GitHub</a>
           <p className="credits">©中島かんぱにー<br />since 2024-2025</p>
         </div>
       </div>
       <div className="learn-base">
-        <h1>学習</h1>
-        <p>This is the Learn page content.</p>
-        <Link to="/problem/00_tutorial/problem_a"><button>Go to /Problem/00_tutorial/problem_a</button></Link>
+        <h1 className="learn-title">学習</h1>
+        {problemList.map((category) => (
+          <div key={category.id} className="category-section">
+            <h2 className="category-title">{category.title}</h2>
+            <p className="category-description">{category.description}</p>
+            <ul className="problem-list">
+              {category.problems.map((problem) => (
+                <li key={problem.id} className="problem-item">
+                  <Link 
+                    to={`/problem/${category.path_id}/${problem.path_id}`} 
+                    className="problem-button"
+                  >
+                    {problem.title} (Level {problem.level})
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
     </>
   );
-}
+};
 
 export default LearnComponent;

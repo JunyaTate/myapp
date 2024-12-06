@@ -8,6 +8,20 @@
     padding : 0;
 }
 
+/*スクロールバーの設定*/
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 30px;
+  background: #383f4d;
+}
+
+::-webkit-scrollbar-track {
+  background: #2c3038;
+}
+
 .problem-title{
     font-size: 25px;
     font-weight: bold;
@@ -28,6 +42,7 @@
     display : flex;
     flex-direction: column;
     align-items: flex-start;
+    padding-bottom  : 50px;
 }
 
 .problem-statement h3, .problem-statement pre { 
