@@ -1,7 +1,6 @@
-import React, { useState, } from 'react';
+import React, { useState } from 'react';
 import AceEditor from 'react-ace';
 import settingIcon from '../images/settingicon.png';
-
 
 const Editor = () => {
     const [mode, setMode] = useState("python");
@@ -10,6 +9,7 @@ const Editor = () => {
     const [fontSize, setFontSize] = useState(14);
     const [tabSize, setTabSize] = useState(4);
     const [showSettings, setShowSettings] = useState(false);
+    const [code, setCode] = useState(""); // Store code
 
     const handleFontSizeIncrease = () => {
         setFontSize(prevFontSize => Math.min(prevFontSize + 1, 99));
@@ -23,10 +23,38 @@ const Editor = () => {
         setMode(event.target.value);
     };
 
-    const handleRun = () => {
-        const result = "実行結果例";
-        setOutput(result);
+    const handleRun = async () => {
+        const requestBody = {
+            language: mode === "python" ? "Python" : "Java",
+            code: code,
+            input: "sample input",  // 必要に応じて変更
+        };
+    
+        try {
+            const response = await fetch('https://api.aiblecode.net/api/run', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestBody),
+                credentials: 'include',  // クッキーを送信
+            });
+    
+            const data = await response.json();
+    
+            if (response.ok) {
+                setOutput(data.stdout); // 出力を表示
+            } else {
+                setOutput(`Error: ${data.stderr || 'Something went wrong'}`);
+            }
+        } catch (error) {
+            console.error("Error executing code:", error);
+            setOutput("Error: Failed to execute the code.");
+        }
     };
+
+    
 
     const handleSubmit = () => {
         console.log('Submit button clicked');
@@ -55,7 +83,7 @@ const Editor = () => {
     };
 
     function onChange(newValue) {
-        console.log('change', newValue);
+        setCode(newValue); // Store code as it changes
     }
 
     return (
@@ -91,7 +119,6 @@ const Editor = () => {
                 />
 
                 <div className="inout-container">
-                    <p>ここに入出力を表示する</p>
                     <div className="output-area">{output}</div>
                 </div>
 
