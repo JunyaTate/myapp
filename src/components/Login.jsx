@@ -1,13 +1,13 @@
-import React, {  useState } from 'react';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
 const Login = ({ setLoginForm }) => {
   const [activeTab, setActiveTab] = useState('login'); // 'login' or 'signup'
-  const [signupError, setSignupError] = useState(null); // エラー状態
-  const [signupUsername, setSignupUsername] = useState(''); // 新規登録時のユーザー名
-  const [signupPassword, setSignupPassword] = useState(''); // 新規登録時のパスワード
-  const [confirmPassword, setConfirmPassword] = useState(''); // 新規登録時のパスワード確認
-  const [signupSuccess, setSignupSuccess] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const closeLoginForm = () => {
     setLoginForm(false);
@@ -19,38 +19,51 @@ const Login = ({ setLoginForm }) => {
     }
   };
 
-  const handleSignup = async () => {
-    if(signupPassword !== confirmPassword){
-      setSignupError('パスワードが一致しません');
-      return;
-    }
-
+  const handleLogin = async () => {
     try {
-      const response = await axios.post('https://api.aiblecode.net/api/signup', {
-        username: signupUsername,
-        password: signupPassword,
+      const response = await axios.post('https://api.aiblecode.net/api/token', new URLSearchParams({
+        username,
+        password,
+        grant_type: 'password'
+      }), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        withCredentials: true // セッションのcookieを含めるために追加
       });
-
-      
-      console.log('サインアップ成功:',response.data);
-      setSignupSuccess(true);
-      setSignupUsername('');
-      setSignupPassword('');
-      setConfirmPassword('');
+      if (response.status === 200) {
+        // ログイン成功時の処理（例: トークンの保存など）
+        console.log('Login successful:', response.data);
+        closeLoginForm();
+        checkAuthentication();
+      }
     } catch (err) {
-      console.error('サインアップエラー:', err);
-      setSignupError('サインアップに失敗しました');
+      setError('ログインに失敗しました。ユーザー名またはパスワードを確認してください。');
+      console.error('Login error:', err);
     }
   };
 
-  /*const handleLogin = async () => {
-
+  const checkAuthentication = async () => {
     try {
-      const response = await axios.post('https://api.aiblecode.net/api/token', {
+      const response = await axios.get('https://api.aiblecode.net/api/is_authenticated', {
+        withCredentials: true // クッキーを送信するために追加
       });
+      if (response.status === 200 && response.data.is_authenticated) {
+        console.log('User is authenticated:', response.data);
+        setIsAuthenticated(true);
+      } else {
+        console.log('User is not authenticated:', response.data);
+        setIsAuthenticated(false);
+      }
     } catch (err) {
+      console.error('Authentication check error:', err);
+      setIsAuthenticated(false);
     }
-  };*/
+  };
+
+  useEffect(() => {
+    checkAuthentication();
+  }, []);
 
   return (
     <div className='login-popup-overlay' onClick={handleOverlayClick}>
@@ -76,40 +89,50 @@ const Login = ({ setLoginForm }) => {
           {activeTab === 'login' ? (
             <>
               <label className='login-label'>ユーザー名</label>
-              <input className='login-input' type="text" />
+              <input
+                className='login-input'
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
               <label className='login-label'>パスワード</label>
-              <input className='login-input' type="password" />
-              <button className='login-button'>ログイン</button>
+              <input
+                className='login-input'
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button className='login-button' onClick={handleLogin}>ログイン</button>
+              {error && <p className='error-message'>{error}</p>}
             </>
           ) : (
             <>
               <label className='login-label'>ユーザー名</label>
-              <input 
-              className='login-input' 
-              type="text" 
-              value={signupUsername} 
-              onChange={(e)=>setSignupUsername(e.target.value)}
+              <input
+                className='login-input'
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
               <label className='login-label'>パスワード</label>
-              <input 
-              className='login-input' 
-              type="password" 
-              value={signupPassword} 
-              onChange={(e)=>setSignupPassword(e.target.value)}
+              <input
+                className='login-input'
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <label className='login-label'>パスワード確認</label>
-              <input 
-              className='login-input' 
-              type="password" 
-              value={confirmPassword} 
-              onChange={(e)=>setConfirmPassword(e.target.value)}
+              <input
+                className='login-input'
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
-              <button className='login-button' onClick={handleSignup}>新規登録</button>
-              {signupError&&<p className='error-massage'>{signupError}</p>}
-              {signupSuccess&&closeLoginForm()}
+              <button className='login-button'>新規登録</button>
             </>
           )}
         </div>
+        {isAuthenticated && <p className='authenticated-message'>ユーザーは認証されています。</p>}
       </div>
     </div>
   );
