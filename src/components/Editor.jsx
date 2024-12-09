@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
 import AceEditor from 'react-ace';
 import settingIcon from '../images/settingicon.png';
-import Login from './Login.jsx'; // Import the Login component
 
-const Editor = ({ checkAuthentication }) => {
-    const [mode, setMode] = useState("python");
-    const [output, setOutput] = useState("");
+const Editor = ({ checkAuthentication, mode, setMode, code, setCode }) => {
     const [theme, setTheme] = useState("monokai");
     const [fontSize, setFontSize] = useState(14);
     const [tabSize, setTabSize] = useState(4);
     const [showSettings, setShowSettings] = useState(false);
-    const [showLoginForm, setShowLoginForm] = useState(false);
-    const [code, setCode] = useState(""); // Store code
 
     const handleFontSizeIncrease = () => {
         setFontSize(prevFontSize => Math.min(prevFontSize + 1, 99));
@@ -23,48 +18,6 @@ const Editor = ({ checkAuthentication }) => {
 
     const handleModeChange = (event) => {
         setMode(event.target.value);
-    };
-
-    const handleRun = async () => {
-        const requestBody = {
-            language: mode === "python" ? "Python" : "Java",
-            code: code,
-            input: "sample input",
-        };
-    
-        try {
-            const response = await fetch('https://api.aiblecode.net/api/run', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(requestBody),
-                credentials: 'include',
-            });
-    
-            const data = await response.json();
-    
-            if (response.ok) {
-                setOutput(data.stdout);
-            } else {
-                if (response.status === 401) {
-                    // If unauthorized, show login form
-                    setOutput("ログインしてください");
-                    setShowLoginForm(true);
-                    return;
-                }
-                setOutput(`Error: ${data.stderr || 'Something went wrong'}`);
-            }
-            
-        } catch (error) {
-            console.error("Error executing code:", error);
-            setOutput("Error: Failed to execute the code.");
-        }
-    };
-
-    const handleSubmit = () => {
-        console.log('Submit button clicked');
     };
 
     const handleSettingsClick = () => {
@@ -94,23 +47,24 @@ const Editor = ({ checkAuthentication }) => {
     }
 
     return (
-        <>
-            <div className="editor">
-                <div className="editor-header">
-                    <span className='editor-title'>コード</span>
-                    <button className="setting-button" onClick={handleSettingsClick}>
-                        <img src={settingIcon} alt="設定" />
-                    </button>
-                    <select className="editor-mode-select" onChange={handleModeChange} value={mode}>
-                        <option value="python">Python</option>
-                        <option value="java">Java</option>
-                    </select>
-                </div>
+        <div className="editor">
+            <div className="editor-header">
+                <span className='editor-title'>コード</span>
+                <button className="setting-button" onClick={handleSettingsClick}>
+                    <img src={settingIcon} alt="設定" />
+                </button>
+                <select className="editor-mode-select" onChange={handleModeChange} value={mode}>
+                    <option value="python">Python</option>
+                    <option value="java">Java</option>
+                </select>
+            </div>
 
+            <div className="ace-editor-wrapper">
                 <AceEditor
                     mode={mode}
                     theme={theme}
                     onChange={onChange}
+                    value={code}
                     name="Editor"
                     width="100%"
                     height="100%"
@@ -119,20 +73,10 @@ const Editor = ({ checkAuthentication }) => {
                     fontSize={fontSize}
                     tabSize={tabSize}
                     wrapEnabled={true}
-                    style={{ flex: 1 }}
                     setOptions={{
                         tabSize: tabSize,
                     }}
                 />
-
-                <div className="inout-container">
-                    <div className="output-area">{output}</div>
-                </div>
-
-                <div className="button-container">
-                    <button className="run-button" onClick={handleRun}>▶ 実行する</button>
-                    <button className="submit-button" onClick={handleSubmit}>提出する</button>
-                </div>
             </div>
 
             {showSettings && (
@@ -172,14 +116,7 @@ const Editor = ({ checkAuthentication }) => {
                     </div>
                 </div>
             )}
-
-            {showLoginForm && (
-                <Login 
-                    setLoginForm={setShowLoginForm} 
-                    checkAuthentication={checkAuthentication}
-                />
-            )}
-        </>
+        </div>
     );
 };
 

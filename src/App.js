@@ -9,6 +9,7 @@ import './components/styles/Problem.css';
 import './components/styles/Login.css';
 import './components/styles/Learn.css';
 import './components/styles/Editor.css';
+import './components/styles/Output.css';
 
 // AceEditorに必要なライブラリをインポート
 import 'ace-builds/src-noconflict/ace';

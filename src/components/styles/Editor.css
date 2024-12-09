@@ -198,8 +198,45 @@
     background-color: #d4d4d4;
   }
 
-  .output-area{
+  .editor {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 100px);
+    overflow: hidden;
+  }
+  
+  .editor-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .ace-editor-wrapper {
+    flex-grow: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+  
+  .inout-container {
+    background-color: #2c3038;
+    color: white;
+    padding: 10px;
+    height: 100px;
+    overflow-y: hidden;
+    margin-top: 10px;
+  }
+  
+  .output-area {
     background-color: #272822;
+    color: #f8f8f2;
+    padding: 10px;
+    border-radius: 5px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: monospace;
+    font-size: 12px;
+    overflow-y: auto;
   }
 
   

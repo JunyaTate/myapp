@@ -2,26 +2,33 @@ import React, { useState } from 'react';
 import Split from 'react-split';
 import Editor from './Editor';
 import Problem from './Problem';
+import Output from './Output';
 
 import './styles/AceEditor.css';
 
 const AceEditorComponent = () => {
     const [selectedTab, setSelectedTab] = useState("問題");
+    const [mode, setMode] = useState("python");
+    const [code, setCode] = useState("");
 
     const handleTabClick = (tab) => {
         setSelectedTab(tab);
     };
 
+    const checkAuthentication = () => {
+        console.log("Authentication checked");
+    };
+
     return (
         <div className="outer-container">
             <Split className="split"
-                sizes={[50, 50]} // 初期の各パネルの幅をパーセンテージで指定
-                minSize={400}    // パネルの最小幅
-                expandToMin={false} // 最小幅に拡張しない
-                gutterSize={8}   // 区切り線の幅
-                gutterAlign="center" // 区切り線の配置
-                dragInterval={1}  // ドラッグの間隔
-                direction="horizontal" // 水平方向に分割 
+                sizes={[50, 50]} 
+                minSize={400}    
+                expandToMin={false} 
+                gutterSize={8}   
+                gutterAlign="center" 
+                dragInterval={1}  
+                direction="horizontal" 
             >
                 <div className="left-side-space">
                     <div className="left-header">
@@ -42,7 +49,18 @@ const AceEditorComponent = () => {
                     )}
                 </div>
                 <div className='editor-container'>
-                    <Editor />
+                    <Editor 
+                        checkAuthentication={checkAuthentication} 
+                        mode={mode} 
+                        setMode={setMode}
+                        code={code}
+                        setCode={setCode}
+                    />
+                    <Output 
+                        mode={mode} 
+                        code={code} 
+                        checkAuthentication={checkAuthentication}
+                    />
                 </div>
             </Split>
         </div>
