@@ -53,7 +53,7 @@ const Problem = () => {
       {/* タイトル部分 */}
       <div className="problem-title">
         <h2>{problemData.title}</h2>
-        <p>実行時間: {problemData.time_limit} sec以内 ／ メモリ: {problemData.memory_limit} MiB以内</p>
+        <p>実行時間: {problemData.time_limit} sec以内 ／ メモリ: {problemData.memory_limit} MiB以内  （正解者数: {problemData.accepted_count} 名）</p>
       </div>
 
       <div className="problem-statement">

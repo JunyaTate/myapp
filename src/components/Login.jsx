@@ -70,6 +70,7 @@ const Login = ({ setLoginForm, checkAuthentication }) => {
               <input
                 className='login-input'
                 type="text"
+                placeholder='ユーザー名'
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
@@ -77,6 +78,7 @@ const Login = ({ setLoginForm, checkAuthentication }) => {
               <input
                 className='login-input'
                 type="password"
+                placeholder='パスワード'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -89,6 +91,7 @@ const Login = ({ setLoginForm, checkAuthentication }) => {
               <input
                 className='login-input'
                 type="text"
+                placeholder='ユーザー名'
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
@@ -96,13 +99,15 @@ const Login = ({ setLoginForm, checkAuthentication }) => {
               <input
                 className='login-input'
                 type="password"
+                placeholder='パスワード'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <label className='login-label'>パスワード確認</label>
+              <label className='login-label'>パスワード(確認)</label>
               <input
                 className='login-input'
                 type="password"
+                placeholder='パスワード(確認)'
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />

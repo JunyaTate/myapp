@@ -29,10 +29,10 @@ const LearnComponent = () => {
     try {
       const authResponse = await axios.get('https://api.aiblecode.net/api/is_authenticated', { withCredentials: true });
       setIsAuthenticated(authResponse.data.is_authenticated);
-      
+
       if (authResponse.data.is_authenticated) {
         const userListResponse = await axios.get('https://api.aiblecode.net/api/user_list', { withCredentials: true });
-        
+
         if (userListResponse.data && userListResponse.data.length > 0) {
           setUsername(userListResponse.data[0].username || 'guest_user');
         } else {
@@ -100,11 +100,12 @@ const LearnComponent = () => {
             <ul className="problem-list">
               {category.problems.map((problem) => (
                 <li key={problem.id} className="problem-item">
-                  <Link 
-                    to={`/problem/${category.path_id}/${problem.path_id}`} 
+                  <Link
+                    to={`/problem/${category.path_id}/${problem.path_id}`}
                     className="problem-button"
                   >
-                    {problem.title} (Level {problem.level})
+                    <p className={`problem-level-${problem.level}`}>{"★".repeat(problem.level)}</p>
+                    {problem.title}
                   </Link>
                 </li>
               ))}
