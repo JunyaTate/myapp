@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import AceEditor from 'react-ace';
 import settingIcon from '../images/settingicon.png';
+import Login from './Login.jsx'; // Import the Login component
 
-const Editor = () => {
+const Editor = ({ checkAuthentication }) => {
     const [mode, setMode] = useState("python");
     const [output, setOutput] = useState("");
     const [theme, setTheme] = useState("monokai");
     const [fontSize, setFontSize] = useState(14);
     const [tabSize, setTabSize] = useState(4);
     const [showSettings, setShowSettings] = useState(false);
+    const [showLoginForm, setShowLoginForm] = useState(false);
     const [code, setCode] = useState(""); // Store code
 
     const handleFontSizeIncrease = () => {
@@ -27,7 +29,7 @@ const Editor = () => {
         const requestBody = {
             language: mode === "python" ? "Python" : "Java",
             code: code,
-            input: "sample input",  // 必要に応じて変更
+            input: "sample input",
         };
     
         try {
@@ -38,23 +40,28 @@ const Editor = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(requestBody),
-                credentials: 'include',  // クッキーを送信
+                credentials: 'include',
             });
     
             const data = await response.json();
     
             if (response.ok) {
-                setOutput(data.stdout); // 出力を表示
+                setOutput(data.stdout);
             } else {
+                if (response.status === 401) {
+                    // If unauthorized, show login form
+                    setOutput("ログインしてください");
+                    setShowLoginForm(true);
+                    return;
+                }
                 setOutput(`Error: ${data.stderr || 'Something went wrong'}`);
             }
+            
         } catch (error) {
             console.error("Error executing code:", error);
             setOutput("Error: Failed to execute the code.");
         }
     };
-
-    
 
     const handleSubmit = () => {
         console.log('Submit button clicked');
@@ -83,7 +90,7 @@ const Editor = () => {
     };
 
     function onChange(newValue) {
-        setCode(newValue); // Store code as it changes
+        setCode(newValue);
     }
 
     return (
@@ -164,6 +171,13 @@ const Editor = () => {
                         </div>
                     </div>
                 </div>
+            )}
+
+            {showLoginForm && (
+                <Login 
+                    setLoginForm={setShowLoginForm} 
+                    checkAuthentication={checkAuthentication}
+                />
             )}
         </>
     );
