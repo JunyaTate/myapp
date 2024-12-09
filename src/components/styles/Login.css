@@ -1,9 +1,9 @@
 .login-popup-header {
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    margin-bottom: 10px; 
-    border-bottom: 3px solid #ffffff; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    border-bottom: 3px solid #4D5362;
     padding-bottom: 5px;
 }
 
@@ -14,7 +14,7 @@
 }
 
 .tab-button1 {
-    padding: 10px 20px; 
+    padding: 10px 20px;
     background: none;
     border: none;
     color: white;
@@ -23,8 +23,13 @@
     cursor: pointer;
     border-bottom: 2px solid transparent;
     transition: border-color 0.3s;
+    transition: background-color 0.3s;
     border-right: 3px solid #4D5362;
     border-left: 3px solid #4D5362;
+}
+
+.tab-button1:hover {
+    background-color: #4D5362;
 }
 
 .tab-button2 {
@@ -36,56 +41,77 @@
     cursor: pointer;
     border-bottom: 2px solid transparent;
     transition: border-color 0.3s;
+    transition: background-color 0.3s;
     border-right: 3px solid #4D5362;
 }
 
-.tab-button1.active,.tab-button2.active {
-    border-bottom: 2px solid #ffffff; 
+.tab-button2:hover {
+    background-color: #4D5362;
 }
-  
+
+.tab-button1.active,
+.tab-button2.active {
+    border-bottom: 2px solid #ffffff;
+}
+
 .login-popup-content {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 60px; /* フッターとの間隔を確保 */
+    margin-bottom: 60px;
+    /* フッターとの間隔を確保 */
+}
+
+.login-label {
+    color: white;
+    font-size: 16px;
+    margin-bottom: 5px;
+    margin-top: 10px;
 }
 
 .login-input {
+    font-size: 16px;
     border-radius: 10px;
     border: none;
     margin-bottom: 10px;
     height: 26px;
     width: 100%;
-    padding-left:5px;
+    margin: 0;
+    padding: 15px;
 }
 
 .login-button {
-    background-color: #007BFF; /* 青色 */
+    background-color: #007BFF;
+    /* 青色 */
     color: white;
     border: none;
     border-radius: 5px;
     padding: 10px 15px;
-    position: absolute; /* 右下配置 */
+    position: absolute;
+    /* 右下配置 */
     bottom: 20px;
     right: 20px;
     cursor: pointer;
 }
 
-.login-popup-settings { 
-    position: fixed; 
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); 
-    background-color: #2c3038; 
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5); 
-    padding: 40px; /* 元の20pxから増やして中身に余裕を持たせる */
-    width: 500px; /* 元の300pxから大きくする */
+.login-popup-settings {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #2c3038;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+    padding: 40px;
+    /* 元の20pxから増やして中身に余裕を持たせる */
+    width: 500px;
+    /* 元の300pxから大きくする */
     z-index: 1000;
     border: none;
-    border-radius: 10px; /* 角を少し丸める */
+    border-radius: 10px;
+    /* 角を少し丸める */
 }
 
-  
+
 .login-popup-overlay {
     position: fixed;
     top: 0;
@@ -96,13 +122,13 @@
     z-index: 999;
 }
 
-.login-popup-close-button { 
-    position: absolute; 
-    top: 10px; 
-    right: 10px; 
-    background: none; 
-    border: none; 
-    font-size: 18px; 
+.login-popup-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 18px;
     font-weight: bold;
     cursor: pointer;
     color: white;
@@ -123,9 +149,12 @@
 
 .login-popup-footer {
     display: flex;
-    justify-content: flex-start; /* 左寄せで配置 */
-    gap: 10px; /* ボタン間の余白 */
-    position: absolute; /* 左下配置 */
+    justify-content: flex-start;
+    /* 左寄せで配置 */
+    gap: 10px;
+    /* ボタン間の余白 */
+    position: absolute;
+    /* 左下配置 */
     bottom: 20px;
     left: 20px;
 }

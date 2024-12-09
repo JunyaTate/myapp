@@ -1,148 +1,267 @@
 /* Sidebar */
 .sidebar {
-    height: 100vh;  /* ビューポートの高さに合わせる */
-    width: 20%;   /* サイドバーの幅を増やす */
-    position: fixed; /* 固定位置 */
-    left: 0;        /* 左側に固定 */
-    top: 0;         /* 上部に固定 */
-    background-color: #2c3038;  /* 背景色 */
-    padding: 20px;  /* パディング */
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);  /* 影を追加 */
-    color: #ffffff;  /* 文字色を白に変更 */
-    display:flex;
-    flex-direction: column;
-    justify-content: space-between;
+  height: 100vh;
+  /* ビューポートの高さに合わせる */
+  width: 20%;
+  /* サイドバーの幅を増やす */
+  position: fixed;
+  /* 固定位置 */
+  left: 0;
+  /* 左側に固定 */
+  top: 0;
+  /* 上部に固定 */
+  background-color: #2c3038;
+  /* 背景色 */
+  padding: 20px;
+  /* パディング */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  /* 影を追加 */
+  color: #ffffff;
+  /* 文字色を白に変更 */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .sidebar-title {
-    font-size: 1.5em; /* タイトルのフォントサイズ */
-    margin-bottom: 10px; /* 下にスペースを空ける */
-    border-bottom: 1px solid #ffffff; /* 下線を引く */
-    padding-bottom: 10px; /* パディングを追加 */
-    text-align: center; /* 中央揃え */ 
+  font-size: 1.5em;
+  /* タイトルのフォントサイズ */
+  margin-bottom: 10px;
+  /* 下にスペースを空ける */
+  border-bottom: 1px solid #ffffff;
+  /* 下線を引く */
+  padding-bottom: 10px;
+  /* パディングを追加 */
+  text-align: center;
+  /* 中央揃え */
 }
 
 .sidebar-heading {
-    font-size: 1.2em; /* 見出しのフォントサイズ */
-    margin-bottom: 10px; /* 下にスペースを空ける */
-    border-bottom: 1px solid #ffffff; /* 下線を引く */
-    padding-bottom: 10px; /* パディングを追加 */
-    
+  font-size: 1.2em;
+  /* 見出しのフォントサイズ */
+  margin-bottom: 10px;
+  /* 下にスペースを空ける */
+  border-bottom: 1px solid #ffffff;
+  /* 下線を引く */
+  padding-bottom: 10px;
+  /* パディングを追加 */
+
 }
 
 .sidebar ul {
-    list-style-type: none;  /* リストのマーカーを削除 */
-    padding: 0;
+  list-style-type: none;
+  /* リストのマーカーを削除 */
+  padding: 0;
 }
 
 .sidebar ul li {
-    margin-bottom: 10px;  /* リストアイテム間のマージン */
+  margin-bottom: 10px;
+  /* リストアイテム間のマージン */
 }
 
-.sidebar-footer { 
-    margin-top: auto; /* 自動的に上部にスペースを追加 */ 
-    padding-top: 10px; /* 上部にパディングを追加 */ 
-    padding-top: 10px; /* 上部にパディングを追加 */ 
-    text-align: center; /* 中央揃え */ 
-    display:flex;
-    flex-direction:column;
-    align-items: center;
-} 
+.sidebar-footer {
+  margin-top: auto;
+  /* 自動的に上部にスペースを追加 */
+  padding-top: 10px;
+  /* 上部にパディングを追加 */
+  padding-top: 10px;
+  /* 上部にパディングを追加 */
+  text-align: center;
+  /* 中央揃え */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-.user-name { 
-    font-size : 1.2em;
-    font-weight: bold;
-    width:100%;
-    margin-bottom: 10px; /* 下にスペースを空ける */
-    border-bottom: 1px solid #d3d3d3; /* 上部に薄灰色の下線を追加 */ 
-    padding-bottom: 10px;
-} 
+.user-name {
+  font-size: 1.2em;
+  font-weight: bold;
+  width: 100%;
+  margin-bottom: 10px;
+  /* 下にスペースを空ける */
+  border-bottom: 1px solid #d3d3d3;
+  /* 上部に薄灰色の下線を追加 */
+  padding-bottom: 10px;
+}
 
-.logout-button { 
-    background-color: #2c3038; /* ボタンの背景色 */
-    color: #ffffff; /* ボタンの文字色 */ 
-    border: none; /* ボーダーを削除 */ 
-    padding: 10px 20px; /* パディング */ 
-    cursor: pointer; /* カーソルをポインターに */ 
-    margin-bottom: 10px; /* 下にスペースを空ける */ 
-} 
+.logout-button {
+  background-color: #2c3038;
+  /* ボタンの背景色 */
+  color: #ffffff;
+  /* ボタンの文字色 */
+  width: 100%;
+  border: none;
+  /* ボーダーを削除 */
+  padding: 10px 20px;
+  /* パディング */
+  cursor: pointer;
+  /* カーソルをポインターに */
+  margin-bottom: 10px;
+  /* 下にスペースを空ける */
+  transition: background-color 0.3s ease;
+  /* スムーズな変化を追加 */
+}
 
-.github-link { 
-    color: #ffffff; /* リンクの文字色 */ 
-    text-decoration: none; /* 下線を削除 */ 
-    margin-bottom: 10px; /* 下にスペースを空ける */ 
-} 
+.logout-button:hover {
+  background-color: #4d5362;
+  /* ホバー時の背景色 */
+}
 
-.credits { 
-    color: #d3d3d3; /* クレジットの文字色 */ 
-    font-size: 0.8em; /* フォントサイズ */
+.github-link {
+  background-color: #2c3038;
+  /* ボタンの背景色 */
+  color: #ffffff;
+  /* ボタンの文字色 */
+  width: 100%;
+  border: none;
+  /* ボーダーを削除 */
+  padding: 10px 20px;
+  /* パディング */
+  cursor: pointer;
+  /* カーソルをポインターに */
+  margin-bottom: 10px;
+  /* 下にスペースを空ける */
+  transition: background-color 0.3s ease;
+  /* スムーズな変化を追加 */
+  text-decoration: none;
+  /* 下線を表示しない*/
+}
+
+.github-link:hover {
+  background-color: #4d5362;
+  /* ホバー時の背景色 */
+}
+
+.credits {
+  color: #d3d3d3;
+  /* クレジットの文字色 */
+  font-size: 0.8em;
+  /* フォントサイズ */
 }
 
 /*メイン*/
 .learn-base {
-    padding: 50px; /* 周りに余白を追加 */
-    margin-left: 20%; /* サイドバーと被らないように左にマージンを追加（サイドバーの幅に合わせる） */
-    height: 100%;
-  }
-  
-  .learn-title {
-    font-size: 64px;
-    border-bottom: 5px solid #E6E6E6;
-    margin-bottom: 20px; /* 下線との間にスペース */
-    padding-bottom: 0px;
-  }
-  
-  .category-section {
-    margin-bottom: 20px; /* 各カテゴリー間に余白 */
-  }
-  
-  .category-title {
-    font-size: 36px;
-    border-bottom: 5px solid #E6E6E6;
-    margin-bottom:10px;
-    padding-bottom: 0px;
-  }
-  
-  .category-description {
-    font-size: 15px;
-    margin-bottom: 20px; /* 説明文とボタンの間にスペース */
-    margin-top:20px;
-    color: #000000; /* 説明文を少し薄い色に */
-  }
-  
-  .problem-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .problem-item {
-    margin-bottom: 10px; /* ボタン同士の間隔 */
-  }
-  
-  .problem-button {
-    text-decoration: none; /* 下線を確実に削除 */
-    display: block; /* ボタンをブロック要素に */
-    width: calc(100% - 40px); /* サイドバーとの重なりを防ぐ */
-    margin: 0 auto; /* 中央揃え */
-    padding: 10px; /* 内側の余白 */
-    padding-left:20px;
-    font-size: 30px; /* テキストサイズ */
-    font-weight: bold;
-    text-align: left; /* テキストを左揃え */
-    background-color: white; /* 背景色 */
-    border: 1px solid #ccc; /* ボーダー */
-    border-radius: 30px; /* 角を丸く */
-    color: black; /* テキスト色 */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 浮いているように見せる影 */
-    transition: all 0.2s ease; /* アニメーション */
-  }
-  
-  .problem-button:hover {
-    background-color: #f5f5f5; /* ホバー時の背景色 */
-  }
-  
-  .problem-button:active {
-    transform: translateY(1px); /* 押した時の沈む表現 */
-    box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.2); /* 押下時の影 */
-  }
+  padding: 50px;
+  /* 周りに余白を追加 */
+  margin-left: 20%;
+  /* サイドバーと被らないように左にマージンを追加（サイドバーの幅に合わせる） */
+  height: 100%;
+}
+
+.learn-title {
+  font-size: 64px;
+  border-bottom: 5px solid #E6E6E6;
+  margin-bottom: 20px;
+  /* 下線との間にスペース */
+  padding-bottom: 0px;
+}
+
+.category-section {
+  margin-bottom: 20px;
+  /* 各カテゴリー間に余白 */
+}
+
+.category-title {
+  font-size: 36px;
+  border-bottom: 5px solid #E6E6E6;
+  margin-bottom: 10px;
+  padding-bottom: 0px;
+}
+
+.category-description {
+  font-size: 15px;
+  margin-bottom: 20px;
+  /* 説明文とボタンの間にスペース */
+  margin-top: 20px;
+  color: #000000;
+  /* 説明文を少し薄い色に */
+}
+
+.problem-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.problem-item {
+  margin-bottom: 10px;
+  /* ボタン同士の間隔 */
+}
+
+.problem-button {
+  text-decoration: none;
+  /* 下線を確実に削除 */
+  display: block;
+  /* ボタンをブロック要素に */
+  width: calc(100% - 40px);
+  /* サイドバーとの重なりを防ぐ */
+  margin: 0 auto;
+  /* 中央揃え */
+  padding: 10px;
+  /* 内側の余白 */
+  padding-left: 20px;
+  font-size: 30px;
+  /* テキストサイズ */
+  font-weight: bold;
+  text-align: left;
+  /* テキストを左揃え */
+  background-color: white;
+  /* 背景色 */
+  border: 1px solid #ccc;
+  /* ボーダー */
+  border-radius: 30px;
+  /* 角を丸く */
+  color: black;
+  /* テキスト色 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* 浮いているように見せる影 */
+  transition: all 0.2s ease;
+  /* アニメーション */
+}
+
+.problem-button:hover {
+  background-color: #f5f5f5;
+  /* ホバー時の背景色 */
+}
+
+.problem-button:active {
+  transform: translateY(1px);
+  /* 押した時の沈む表現 */
+  box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.2);
+  /* 押下時の影 */
+}
+
+.problem-level-1 {
+  font-size: 15px;
+  padding: 0;
+  margin: 0;
+  color: #51e47d;
+}
+
+.problem-level-2 {
+  font-size: 15px;
+  padding: 0;
+  margin: 0;
+  color: #76c8ff;
+}
+
+.problem-level-3 {
+  font-size: 15px;
+  padding: 0;
+  margin: 0;
+  color: #ffc46a;
+}
+
+.problem-level-4 {
+  font-size: 15px;
+  padding: 0;
+  margin: 0;
+  color: #e97474;
+}
+
+.problem-level-5 {
+  font-size: 15px;
+  padding: 0;
+  margin: 0;
+  color: #aa66c9;
+}
