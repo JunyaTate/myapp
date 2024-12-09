@@ -48,17 +48,18 @@ const Problem = () => {
   }
 
   return (
-    
+
     <div className="problem-container">
       {/* タイトル部分 */}
-      <div>
-        <h2 className="problem-title">{problemData.title}</h2>
+      <div className="problem-title">
+        <h2>{problemData.title}</h2>
+        <p>実行時間: {problemData.time_limit} sec以内 ／ メモリ: {problemData.memory_limit} MiB以内</p>
       </div>
 
       <div className="problem-statement">
-      <ReactMarkdown remarkPlugins={[remarkMath, remarkGfm]} rehypePlugins={[rehypeKatex]}>
-        {problemData.statement}
-      </ReactMarkdown>
+        <ReactMarkdown remarkPlugins={[remarkMath, remarkGfm]} rehypePlugins={[rehypeKatex]}>
+          {problemData.statement}
+        </ReactMarkdown>
       </div>
     </div>
   );
