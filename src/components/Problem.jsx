@@ -8,8 +8,10 @@ import rehypeKatex from 'rehype-katex';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 
-import './styles/Problem.css'; // スタイルを外部ファイルで管理
+import Loading from './Loading';
+
 import './styles/App.css';
+import './styles/Problem.css'; // スタイルを外部ファイルで管理
 
 
 const Problem = () => {
@@ -36,7 +38,7 @@ const Problem = () => {
   }, [categoryId, problemId]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (error) {
