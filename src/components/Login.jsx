@@ -43,6 +43,39 @@ const Login = ({ setLoginForm, checkAuthentication }) => {
     }
   };
 
+  const handleSignup = async () => {
+    if (password !== confirmPassword) {
+      setError('パスワードが一致しません');
+      return;
+    }
+
+    const requestBody = {
+      username: username,
+      password: password,
+    };
+    try {
+      const response = await fetch('https://api.aiblecode.net/api/signup', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+        credentials: 'include',
+      });
+      if (response.status === 200) {
+        // ログイン成功時の処理（例: トークンの保存など）
+        console.log('Signin successful:', response.data);
+        setActiveTab('login');
+      } else if (response.status === 400) {
+        setError('ユーザー名が既に使用されています');
+      }
+    } catch (err) {
+      setError('新規登録に失敗しました。');
+      console.error('Signup error:', err);
+    }
+  }
+
   return (
     <div className='login-popup-overlay' onClick={handleOverlayClick}>
       <div className='login-popup-settings'>
@@ -111,7 +144,8 @@ const Login = ({ setLoginForm, checkAuthentication }) => {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
-              <button className='login-button'>新規登録</button>
+              <button className='login-button' onClick={handleSignup}>新規登録</button>
+              {error && <p className='error-message'>{error}</p>}
             </>
           )}
         </div>

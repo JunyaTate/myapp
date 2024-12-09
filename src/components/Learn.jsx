@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Loading from './Loading.jsx';
 import Login from './Login.jsx';
 
 const LearnComponent = () => {
@@ -75,9 +76,10 @@ const LearnComponent = () => {
         <h1 className="sidebar-title">AIbleCode</h1>
         <h2 className="sidebar-heading">学習</h2>
         <ul>
-          {categoryList.map((category) => (
+          {categoryList ? categoryList.map((category) => (
             <li key={category.id}>{category.title}</li>
-          ))}
+          )) : <Loading />
+          }
         </ul>
         <div className="sidebar-footer">
           <p className="user-name">{username}</p>
@@ -93,7 +95,7 @@ const LearnComponent = () => {
       </div>
       <div className="learn-base">
         <h1 className="learn-title">学習</h1>
-        {problemList.map((category) => (
+        {problemList ? problemList.map((category) => (
           <div key={category.id} className="category-section">
             <h2 className="category-title">{category.title}</h2>
             <p className="category-description">{category.description}</p>
@@ -111,7 +113,7 @@ const LearnComponent = () => {
               ))}
             </ul>
           </div>
-        ))}
+        )) : <Loading />}
       </div>
     </>
   );

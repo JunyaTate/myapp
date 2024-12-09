@@ -3,22 +3,22 @@ import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import AceEditorComponent from './components/AceEditor.jsx';
 import Login from './components/Login.jsx';
 
-import './components/styles/App.css';
 import './components/styles/AceEditor.css';
-import './components/styles/Problem.css';
-import './components/styles/Login.css';
-import './components/styles/Learn.css';
+import './components/styles/App.css';
 import './components/styles/Editor.css';
+import './components/styles/Learn.css';
+import './components/styles/Login.css';
 import './components/styles/Output.css';
+import './components/styles/Problem.css';
 
 // AceEditorに必要なライブラリをインポート
 import 'ace-builds/src-noconflict/ace';
 
-import 'ace-builds/src-noconflict/mode-python';
 import 'ace-builds/src-noconflict/mode-java';
+import 'ace-builds/src-noconflict/mode-python';
 
-import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/theme-github';
+import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/theme-solarized_dark';
 import 'ace-builds/src-noconflict/theme-solarized_light';
 

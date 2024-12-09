@@ -65,6 +65,8 @@
     border-radius: 16px; 
     font-size: 14px;
     cursor: pointer;
+    width: 120px; /* Fixed width */
+    height: 40px; /* Fixed height */
   }
   
   .run-button{
@@ -197,7 +199,18 @@
   .run-button:hover{
     background-color: #d4d4d4;
   }
-
+  .run-button {
+    padding: 8px 20px;
+    margin-left: 10px;
+    background-color: #ffffff;
+    color: #5691d4;
+    border: none;
+    border-radius: 16px;
+    font-size: 14px;
+    cursor: pointer;
+    width: 120px; /* Fixed width */
+    height: 40px; /* Fixed height */
+  }
   .editor {
     display: flex;
     flex-direction: column;
@@ -226,17 +239,3 @@
     overflow-y: hidden;
     margin-top: 10px;
   }
-  
-  .output-area {
-    background-color: #272822;
-    color: #f8f8f2;
-    padding: 10px;
-    border-radius: 5px;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    font-family: monospace;
-    font-size: 12px;
-    overflow-y: auto;
-  }
-
-  

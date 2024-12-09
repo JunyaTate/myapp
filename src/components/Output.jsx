@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import Loading from './Loading.jsx';
 import Login from './Login.jsx';
 
 const Output = ({ mode, code, checkAuthentication }) => {
-    const [input, setInput] = useState("sample input");
+    const [input, setInput] = useState("");
     const [output, setOutput] = useState("");
     const [errorOutput, setErrorOutput] = useState("");
     const [activeTab, setActiveTab] = useState("stdin");
     const [showLoginForm, setShowLoginForm] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const handleRun = async () => {
         const requestBody = {
@@ -14,8 +16,9 @@ const Output = ({ mode, code, checkAuthentication }) => {
             code: code,
             input: input,
         };
-    
+
         try {
+            setLoading(true);
             const response = await fetch('https://api.aiblecode.net/api/run', {
                 method: 'POST',
                 headers: {
@@ -25,12 +28,17 @@ const Output = ({ mode, code, checkAuthentication }) => {
                 body: JSON.stringify(requestBody),
                 credentials: 'include',
             });
-    
+
             const data = await response.json();
-    
+
             if (response.ok) {
                 setOutput(data.stdout || ""); // 標準出力
                 setErrorOutput(data.stderr || ""); // エラー出力
+                if (data.stderr) {
+                    setActiveTab("stderr");
+                } else {
+                    setActiveTab("stdout");
+                }
             } else {
                 if (response.status === 401) {
                     setOutput("");
@@ -45,6 +53,8 @@ const Output = ({ mode, code, checkAuthentication }) => {
             console.error("Error executing code:", error);
             setOutput("");
             setErrorOutput("エラー: 実行に失敗しました。");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -55,19 +65,19 @@ const Output = ({ mode, code, checkAuthentication }) => {
     return (
         <div className="output">
             <div className="tabs">
-                <button 
+                <button
                     className={`tab ${activeTab === "stdin" ? "active" : ""}`}
                     onClick={() => setActiveTab("stdin")}
                 >
                     標準入力
                 </button>
-                <button 
+                <button
                     className={`tab ${activeTab === "stdout" ? "active" : ""}`}
                     onClick={() => setActiveTab("stdout")}
                 >
                     標準出力
                 </button>
-                <button 
+                <button
                     className={`tab ${activeTab === "stderr" ? "active" : ""}`}
                     onClick={() => setActiveTab("stderr")}
                 >
@@ -87,24 +97,32 @@ const Output = ({ mode, code, checkAuthentication }) => {
                 )}
                 {activeTab === "stdout" && (
                     <div className="output-area">
-                        {output || "標準出力はここに表示されます。"}
+                        <textarea
+                            value={output || ""}
+                            placeholder="ここに標準出力が表示されます。"
+                            readOnly
+                        />
                     </div>
                 )}
                 {activeTab === "stderr" && (
-                    <div className="output-area error">
-                        {errorOutput || "エラー出力はここに表示されます。"}
+                    <div className="output-area">
+                        <textarea
+                            value={errorOutput || ""}
+                            placeholder="ここにエラー出力が表示されます。"
+                            readOnly
+                        />
                     </div>
                 )}
             </div>
 
             <div className="button-container">
-                <button className="run-button" onClick={handleRun}>▶ 実行する</button>
+                <button className="run-button" onClick={handleRun} disabled={loading} style={loading ? { backgroundColor: '#d4d4d4' } : {}}>{loading ? <span><Loading width={20} /></span> : "▶ 実行する"}</button>
                 <button className="submit-button" onClick={handleSubmit}>提出する</button>
             </div>
 
             {showLoginForm && (
-                <Login 
-                    setLoginForm={setShowLoginForm} 
+                <Login
+                    setLoginForm={setShowLoginForm}
                     checkAuthentication={checkAuthentication}
                 />
             )}
