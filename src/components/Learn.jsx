@@ -32,10 +32,10 @@ const LearnComponent = () => {
       setIsAuthenticated(authResponse.data.is_authenticated);
 
       if (authResponse.data.is_authenticated) {
-        const userListResponse = await axios.get('https://api.aiblecode.net/api/user_list', { withCredentials: true });
+        const userResponse = await axios.get('https://api.aiblecode.net/api/my_user', { withCredentials: true });
 
-        if (userListResponse.data && userListResponse.data.length > 0) {
-          setUsername(userListResponse.data[0].username || 'Guest');
+        if (userResponse.data) {
+          setUsername(userResponse.data.user.username || 'Guest');
         } else {
           setUsername('Guest');
         }

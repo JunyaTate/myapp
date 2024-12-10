@@ -22,6 +22,12 @@ const CodeBlock = ({ className, children }) => {
 const CodeBlockInner = ({ inline, className, children }) => {
     const [copied, setCopied] = useState(false);
 
+    const mapping = {
+        "py": "Python",
+        "java": "Java",
+        "cpp": "C++",
+    }
+
     const handleCopy = () => {
         navigator.clipboard.writeText(String(children).trim() + "\n").then(
             () => {
@@ -44,6 +50,7 @@ const CodeBlockInner = ({ inline, className, children }) => {
 
     return (
         <div style={{ position: 'relative' }}>
+            <h3 style={{ margin: "5px" }}>{mapping[lang]}</h3>
             <SyntaxHighlighter
                 style={vscDarkPlus}
                 language={lang}
@@ -53,7 +60,7 @@ const CodeBlockInner = ({ inline, className, children }) => {
                 onClick={handleCopy}
                 style={{
                     position: 'absolute',
-                    top: '10px',
+                    top: lang ? '30px' : '10px',
                     right: '5.5%',
                     backgroundColor: '#333',
                     color: '#fff',
