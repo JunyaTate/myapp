@@ -65,11 +65,30 @@
 }
 
 .problem-statement pre {
-    background-color: black;
-    width: min(95%, 750px);
+    width: min(95%, 800px);
     margin-top: 5px;
     margin-bottom: 10px;
     padding: 10px;
+}
+
+.problem-statement pre:hover {
+    cursor: text;
+}
+
+.problem-statement details {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.problem-statement summary {
+    padding: 5px;
+    margin-bottom: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.problem-statement summary:hover {
+    background-color: #4d5362;
+    cursor: pointer;
 }
 
 .problem-statement h1 {

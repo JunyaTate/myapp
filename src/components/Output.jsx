@@ -114,7 +114,6 @@ const Output = ({ mode, code, checkAuthentication }) => {
                     </div>
                 )}
             </div>
-
             <div className="button-container">
                 <button className="run-button" onClick={handleRun} disabled={loading} style={loading ? { backgroundColor: '#d4d4d4' } : {}}>{loading ? <span><Loading width={20} /></span> : "▶ 実行する"}</button>
                 <button className="submit-button" onClick={handleSubmit}>提出する</button>

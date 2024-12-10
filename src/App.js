@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Link, Route, BrowserRouter as Router, Routes, Navigate } from 'react-router-dom';
 import AceEditorComponent from './components/AceEditor.jsx';
 import Login from './components/Login.jsx';
 
@@ -38,7 +38,7 @@ function App() {
                 <span className="header-back-button">
                   <Link to="/learn">&lt;</Link> {/* Learnへのリンク */}
                 </span>
-                <h1>AIble Code</h1>
+                <h1>AIbleCode</h1>
               </header>
               <AceEditorComponent />
             </div>
@@ -48,6 +48,7 @@ function App() {
         <Route path="/learn" element={<Learn />} />
         {/* Loginページ */}
         <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Navigate replace to="/learn" />} />
       </Routes>
     </Router>
   );
