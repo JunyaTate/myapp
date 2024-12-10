@@ -3,12 +3,13 @@ import Split from 'react-split';
 import Editor from './Editor';
 import Problem from './Problem';
 import Output from './Output';
+import { useContext } from 'react';
+import { selectedTabContext } from './ParamProvider';
 
 import './styles/AceEditor.css';
 
 const AceEditorComponent = () => {
-    const [selectedTab, setSelectedTab] = useState("問題");
-    const [mode, setMode] = useState("python");
+    const { selectedTab, setSelectedTab } = useContext(selectedTabContext);
     const [code, setCode] = useState("");
 
     const handleTabClick = (tab) => {
@@ -22,13 +23,13 @@ const AceEditorComponent = () => {
     return (
         <div className="outer-container">
             <Split className="split"
-                sizes={[50, 50]} 
-                minSize={400}    
-                expandToMin={false} 
-                gutterSize={8}   
-                gutterAlign="center" 
-                dragInterval={1}  
-                direction="horizontal" 
+                sizes={[50, 50]}
+                minSize={400}
+                expandToMin={false}
+                gutterSize={8}
+                gutterAlign="center"
+                dragInterval={1}
+                direction="horizontal"
             >
                 <div className="left-side-space">
                     <div className="left-header">
@@ -41,24 +42,21 @@ const AceEditorComponent = () => {
                             </div>
                         </div>
                     </div>
-                    {selectedTab === "問題" && <Problem />}
+                    {selectedTab === "問題" && <Problem key="問題" />}
                     {selectedTab === "結果一覧" && (
-                        <div className="tab-content">
+                        <div className="tab-content" key="結果一覧">
                             <p>ここに結果一覧のコンテンツを表示する</p>
                         </div>
                     )}
                 </div>
                 <div className='editor-container'>
-                    <Editor 
-                        checkAuthentication={checkAuthentication} 
-                        mode={mode} 
-                        setMode={setMode}
+                    <Editor
+                        checkAuthentication={checkAuthentication}
                         code={code}
                         setCode={setCode}
                     />
-                    <Output 
-                        mode={mode} 
-                        code={code} 
+                    <Output
+                        code={code}
                         checkAuthentication={checkAuthentication}
                     />
                 </div>

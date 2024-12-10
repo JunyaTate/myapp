@@ -24,6 +24,7 @@ import 'ace-builds/src-noconflict/theme-solarized_light';
 
 
 import Learn from './components/Learn.jsx';
+import { SelectedTabProvider, ModeProvider } from './components/ParamProvider.jsx';
 
 function App() {
   return (
@@ -40,7 +41,11 @@ function App() {
                 </span>
                 <h1>AIbleCode</h1>
               </header>
-              <AceEditorComponent />
+              <SelectedTabProvider>
+                <ModeProvider>
+                  <AceEditorComponent />
+                </ModeProvider>
+              </SelectedTabProvider>
             </div>
           }
         />

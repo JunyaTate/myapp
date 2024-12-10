@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import Loading from './Loading.jsx';
 import Login from './Login.jsx';
+import { selectedTabContext, modeContext } from './ParamProvider.jsx';
 
-const Output = ({ mode, code, checkAuthentication }) => {
+const Output = ({ code, checkAuthentication }) => {
+    const { categoryId, problemId } = useParams();
+    const { setSelectedTab } = useContext(selectedTabContext);
+    const { mode } = useContext(modeContext);
     const [input, setInput] = useState("");
     const [output, setOutput] = useState("");
     const [errorOutput, setErrorOutput] = useState("");
     const [activeTab, setActiveTab] = useState("stdin");
     const [showLoginForm, setShowLoginForm] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [loadingRun, setLoadingRun] = useState(false);
+    const [loadingSubmit, setLoadingSubmit] = useState(false);
 
     const handleRun = async () => {
         const requestBody = {
@@ -18,7 +24,7 @@ const Output = ({ mode, code, checkAuthentication }) => {
         };
 
         try {
-            setLoading(true);
+            setLoadingRun(true);
             const response = await fetch('https://api.aiblecode.net/api/run', {
                 method: 'POST',
                 headers: {
@@ -54,12 +60,49 @@ const Output = ({ mode, code, checkAuthentication }) => {
             setOutput("");
             setErrorOutput("エラー: 実行に失敗しました。");
         } finally {
-            setLoading(false);
+            setLoadingRun(false);
         }
     };
 
-    const handleSubmit = () => {
-        console.log('Submit button clicked');
+    const handleSubmit = async () => {
+        const requestBody = {
+            language: mode === "python" ? "Python" : "Java",
+            code: code,
+        };
+
+        try {
+            setLoadingSubmit(true);
+            const response = await fetch(`https://api.aiblecode.net/api/problem/${categoryId}/${problemId}/submit`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestBody),
+                credentials: 'include',
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setSelectedTab("結果一覧");
+            } else {
+                if (response.status === 401) {
+                    setOutput("");
+                    setErrorOutput("ログインしてください");
+                    setShowLoginForm(true);
+                    return;
+                }
+                setOutput("");
+                setErrorOutput(data.stderr || "エラーが発生しました");
+            }
+        } catch (error) {
+            console.error("Error executing code:", error);
+            setOutput("");
+            setErrorOutput("エラー: 実行に失敗しました。");
+        } finally {
+            setLoadingSubmit(false);
+        }
     };
 
     return (
@@ -115,8 +158,20 @@ const Output = ({ mode, code, checkAuthentication }) => {
                 )}
             </div>
             <div className="button-container">
-                <button className="run-button" onClick={handleRun} disabled={loading} style={loading ? { backgroundColor: '#d4d4d4' } : {}}>{loading ? <span><Loading width={20} /></span> : "▶ 実行する"}</button>
-                <button className="submit-button" onClick={handleSubmit}>提出する</button>
+                <button
+                    className="run-button"
+                    onClick={handleRun}
+                    disabled={loadingRun}
+                    style={loadingRun ? { backgroundColor: '#d4d4d4' } : {}}>
+                    {loadingRun ? <span><Loading width={20} /></span> : "▶ 実行する"}
+                </button>
+                <button
+                    className="submit-button"
+                    onClick={handleSubmit}
+                    disabled={loadingSubmit}
+                    style={loadingSubmit ? { backgroundColor: '#79A8FF' } : {}}>
+                    {loadingSubmit ? <span><Loading width={20} /></span> : "提出する"}
+                </button>
             </div>
 
             {showLoginForm && (
