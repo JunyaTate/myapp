@@ -93,27 +93,29 @@ const LearnComponent = () => {
           <p className="credits">©中島かんぱにー<br />since 2024-2025</p>
         </div>
       </div>
-      <div className="learn-base">
-        <h1 className="learn-title">学習</h1>
-        {problemList ? problemList.map((category) => (
-          <div key={category.id} id={`category-${category.id}`} className="category-section">
-            <h2 className="category-title">{category.title}</h2>
-            <p className="category-description">{category.description}</p>
-            <ul className="problem-list">
-              {category.problems.map((problem) => (
-                <li key={problem.id} className="problem-item">
-                  <Link
-                    to={`/problem/${category.path_id}/${problem.path_id}`}
-                    className="problem-button"
-                  >
-                    <p className={`problem-level-${problem.level}`}>{"★".repeat(problem.level)}</p>
-                    {problem.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )) : <Loading />}
+      <div className="learn-container">
+        <div className="learn-base">
+          <h1 className="learn-title">学習</h1>
+          {problemList ? problemList.map((category) => (
+            <div key={category.id} id={`category-${category.id}`} className="category-section">
+              <h2 className="category-title">{category.title}</h2>
+              <p className="category-description">{category.description}</p>
+              <ul className="problem-list">
+                {category.problems.map((problem) => (
+                  <li key={problem.id} className="problem-item">
+                    <Link
+                      to={`/problem/${category.path_id}/${problem.path_id}`}
+                      className="problem-button"
+                    >
+                      <p className={`problem-level-${problem.level}`}>{"★".repeat(problem.level)}</p>
+                      {problem.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )) : <Loading />}
+        </div>
       </div>
     </>
   );

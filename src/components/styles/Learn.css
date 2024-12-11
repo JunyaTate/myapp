@@ -2,7 +2,7 @@
 .sidebar {
   height: 100vh;
   /* ビューポートの高さに合わせる */
-  width: 20%;
+  width: min(20%, 300px);
   /* サイドバーの幅を増やす */
   position: fixed;
   /* 固定位置 */
@@ -153,13 +153,29 @@
   /* フォントサイズ */
 }
 
-/*メイン*/
+.learn-container {
+  display: flex;
+  flex-direction: column;
+  /* 縦方向に並べる */
+  height: 100vh;
+  /* ビューポートの高さに合わせる */
+  margin-left: min(20%, 300px);
+  /* サイドバーの幅分左にマージン */
+  overflow-y: auto;
+  /* 縦スクロールを有効化 */
+  padding: 20px;
+  /* 余白を追加 */
+  background-color: #f9f9f9;
+  /* 背景色を設定 */
+}
+
 .learn-base {
+  flex: 1;
+  /* 親要素内で高さを伸縮可能に */
+  overflow-y: auto;
+  /* 子要素のスクロールを有効化 */
   padding: 50px;
-  /* 周りに余白を追加 */
-  margin-left: 20%;
-  /* サイドバーと被らないように左にマージンを追加（サイドバーの幅に合わせる） */
-  height: 100%;
+  /* 適切な余白を設定 */
 }
 
 .learn-title {
