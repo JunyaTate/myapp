@@ -59,6 +59,20 @@
   /* リストアイテム間のマージン */
 }
 
+.sidebar ul li a {
+  text-decoration: none;
+  color: #ffffff;
+  display: block;
+  padding: 5px;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.sidebar ul li a:hover {
+  background-color: #4d5362;
+  /* ホバー時の背景色 */
+}
+
 .sidebar-footer {
   margin-top: auto;
   /* 自動的に上部にスペースを追加 */

@@ -58,18 +58,40 @@
 .problem-statement pre {
     display: inline-block;
     vertical-align: top;
-    /* 上揃え */
     margin-right: 10px;
-    /* 間隔を調整 */
     margin-bottom: 0;
-}
-
-.problem-statement pre {
-    background-color: black;
-    width: min(95%, 750px);
+    width: min(95%, 800px);
     margin-top: 5px;
     margin-bottom: 10px;
     padding: 10px;
+}
+
+.problem-statement pre:hover {
+    cursor: text;
+}
+
+
+.problem-statement summary {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.problem-statement details {
+    width: 95%;
+    margin-top: 10px;
+    border: 1px solid #4d5362;
+    border-radius: 5px;
+}
+
+.problem-statement details > div {
+    margin: 15px;
+}
+
+.problem-statement summary:hover {
+    background-color: #4d5362;
+    cursor: pointer;
 }
 
 .problem-statement h1 {

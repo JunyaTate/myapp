@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Loading from './Loading.jsx';
 import Login from './Login.jsx';
 
 const LearnComponent = () => {
@@ -8,7 +9,7 @@ const LearnComponent = () => {
   const [categoryList, setCategoryList] = useState([]);
   const [problemList, setProblemList] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [username, setUsername] = useState('guest_user');
+  const [username, setUsername] = useState('Guest');
 
   const handleLoginClick = () => {
     setLoginForm(!showLoginForm);
@@ -18,7 +19,7 @@ const LearnComponent = () => {
     try {
       await axios.post('https://api.aiblecode.net/api/logout', {}, { withCredentials: true });
       setIsAuthenticated(false);
-      setUsername('guest_user');
+      setUsername('Guest');
       console.log('Logout successful');
     } catch (error) {
       console.error('Logout error:', error);
@@ -31,20 +32,20 @@ const LearnComponent = () => {
       setIsAuthenticated(authResponse.data.is_authenticated);
 
       if (authResponse.data.is_authenticated) {
-        const userListResponse = await axios.get('https://api.aiblecode.net/api/user_list', { withCredentials: true });
+        const userResponse = await axios.get('https://api.aiblecode.net/api/my_user', { withCredentials: true });
 
-        if (userListResponse.data && userListResponse.data.length > 0) {
-          setUsername(userListResponse.data[0].username || 'guest_user');
+        if (userResponse.data) {
+          setUsername(userResponse.data.user.username || 'Guest');
         } else {
-          setUsername('guest_user');
+          setUsername('Guest');
         }
       } else {
-        setUsername('guest_user');
+        setUsername('Guest');
       }
     } catch (error) {
       console.error('Authentication check error:', error);
       setIsAuthenticated(false);
-      setUsername('guest_user');
+      setUsername('Guest');
     }
   };
 
@@ -75,9 +76,10 @@ const LearnComponent = () => {
         <h1 className="sidebar-title">AIbleCode</h1>
         <h2 className="sidebar-heading">学習</h2>
         <ul>
-          {categoryList.map((category) => (
-            <li key={category.id}>{category.title}</li>
-          ))}
+          {categoryList ? categoryList.map((category) => (
+            <li key={category.id}><a href={`#category-${category.id}`}>{category.title}</a></li>
+          )) : <Loading />
+          }
         </ul>
         <div className="sidebar-footer">
           <p className="user-name">{username}</p>
@@ -93,8 +95,8 @@ const LearnComponent = () => {
       </div>
       <div className="learn-base">
         <h1 className="learn-title">学習</h1>
-        {problemList.map((category) => (
-          <div key={category.id} className="category-section">
+        {problemList ? problemList.map((category) => (
+          <div key={category.id} id={`category-${category.id}`} className="category-section">
             <h2 className="category-title">{category.title}</h2>
             <p className="category-description">{category.description}</p>
             <ul className="problem-list">
@@ -111,7 +113,7 @@ const LearnComponent = () => {
               ))}
             </ul>
           </div>
-        ))}
+        )) : <Loading />}
       </div>
     </>
   );

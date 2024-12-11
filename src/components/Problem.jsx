@@ -5,11 +5,15 @@ import { useParams } from "react-router-dom";
 import 'katex/dist/katex.min.css';
 import ReactMarkdown from 'react-markdown';
 import rehypeKatex from 'rehype-katex';
+import rehypeRaw from "rehype-raw";
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 
-import './styles/Problem.css'; // スタイルを外部ファイルで管理
+import Loading from './Loading';
+
 import './styles/App.css';
+import './styles/Problem.css'; // スタイルを外部ファイルで管理
+import CodeBlock from "./CodeBlock";
 
 
 const Problem = () => {
@@ -36,7 +40,7 @@ const Problem = () => {
   }, [categoryId, problemId]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (error) {
@@ -57,7 +61,15 @@ const Problem = () => {
       </div>
 
       <div className="problem-statement">
-        <ReactMarkdown remarkPlugins={[remarkMath, remarkGfm]} rehypePlugins={[rehypeKatex]}>
+        <ReactMarkdown
+          remarkPlugins={[remarkMath, remarkGfm]}
+          rehypePlugins={[rehypeKatex, rehypeRaw]}
+          components={{
+            pre: ({ className, children }) => (
+              <CodeBlock className={className} children={children} />
+            ),
+          }}
+        >
           {problemData.statement}
         </ReactMarkdown>
       </div>
