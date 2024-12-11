@@ -3,6 +3,7 @@ import Split from 'react-split';
 import Editor from './Editor';
 import Problem from './Problem';
 import Output from './Output';
+import Results from './Results';
 import { useContext } from 'react';
 import { selectedTabContext } from './ParamProvider';
 
@@ -43,11 +44,7 @@ const AceEditorComponent = () => {
                         </div>
                     </div>
                     {selectedTab === "問題" && <Problem key="問題" />}
-                    {selectedTab === "結果一覧" && (
-                        <div className="tab-content" key="結果一覧">
-                            <p>ここに結果一覧のコンテンツを表示する</p>
-                        </div>
-                    )}
+                    {selectedTab === "結果一覧" && <Results key="結果一覧" />}
                 </div>
                 <div className='editor-container'>
                     <Editor

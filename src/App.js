@@ -10,6 +10,7 @@ import './components/styles/Learn.css';
 import './components/styles/Login.css';
 import './components/styles/Output.css';
 import './components/styles/Problem.css';
+import './components/styles/Results.css';
 
 // AceEditorに必要なライブラリをインポート
 import 'ace-builds/src-noconflict/ace';

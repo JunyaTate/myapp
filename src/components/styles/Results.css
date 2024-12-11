@@ -1,0 +1,65 @@
+/* 全体のテーブルスタイル */
+.result-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0; /* 表の上下左右にスペースを作成 */
+}
+
+/* テーブルのヘッダー行のスタイル */
+.result-list-table thead tr {
+    background-color: #2c3038; /* 背景色 */
+    color: white; /* ヘッダーの文字色 */
+    text-align: center; /* 文字を中央揃え */
+    border-bottom: 2px solid #4d5362; /* 区切り線 */
+}
+
+/* テーブルのデータ行のスタイル */
+.result-list-table tbody tr {
+    background-color: #4d5362; /* データ行の背景色 */
+    text-align: center; /* 文字を中央揃え */
+    border-bottom: 1px solid #595e6b; /* 行ごとの区切り線 */
+}
+
+/* ジャッジ結果の文字色 */
+.result-list-table tbody tr td {
+    padding: 8px 12px; /* セル内余白 */
+}
+
+.result-list-table tbody tr td:nth-child(3) { /* ジャッジ結果の列 */
+    font-weight: bold; /* 文字を太字に */
+}
+
+.result-list-table tbody tr td:nth-child(3):contains("正解") {
+    color: #00ff00; /* 正解を緑色 */
+}
+
+.result-list-table tbody tr td:nth-child(3):contains("不正解") {
+    color: #ffff00; /* 不正解を黄色 */
+}
+
+/* 詳細ボタンのスタイル（オプション） */
+.result-list-table tbody tr td button {
+    background-color: #2c3038;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.result-list-table tbody tr td button:hover {
+    background-color: #4d5362;
+}
+
+.text-gray-500 {
+    color: #a0a0a0;
+}
+
+.text-green-600 {
+    color: #4ade80;
+}
+
+.text-yellow-600 {
+    color: #fbbf24;
+}
+    
