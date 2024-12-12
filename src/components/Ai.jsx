@@ -56,20 +56,17 @@ const AiCompornent = ({ submissionId }) => {
 
     return (
         <div>
-            <h2>AIの解析結果</h2>
-            <div>
-                <ReactMarkdown
-                    remarkPlugins={[remarkMath, remarkGfm]}
-                    rehypePlugins={[rehypeKatex]}
-                    components={{
-                        pre: ({ className, children }) => (
-                            <CodeBlock className={className} children={children} />
-                        ),
-                    }}
-                >
-                    {review.message}
-                </ReactMarkdown>
-            </div>
+            <ReactMarkdown
+                remarkPlugins={[remarkMath, remarkGfm]}
+                rehypePlugins={[rehypeKatex]}
+                components={{
+                    pre: ({ className, children }) => (
+                        <CodeBlock className={className} children={children} />
+                    ),
+                }}
+            >
+                {review.message}
+            </ReactMarkdown>
         </div>
     );
 }

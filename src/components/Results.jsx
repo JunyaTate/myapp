@@ -10,27 +10,24 @@ export const getStatusInfo = (statuses) => {
 
     const sum_val = status.reduce((sum, key) => sum + statuses[key], 0);
 
-    if (statuses["WJ"] === undefined) {
-        if (status.length === 1 && status[0] === 'AC') {
-            return { label: '正解', color: 'text-green-600' };
-        } else if (statuses["IE"] !== undefined) {
-            return { label: '内部エラー', color: 'text-red-600' };
-        } else if (statuses["CE"] !== undefined) {
-            return { label: 'コンパイルエラー', color: 'text-yellow-600' };
-        } else if (statuses["RE"] !== undefined) {
-            return { label: '実行時エラー', color: 'text-yellow-600' };
-        } else if (statuses["WA"] !== undefined) {
-            return { label: '不正解', color: 'text-yellow-600' };
-        } else if (statuses["TLE"] !== undefined) {
-            return { label: '実行時間オーバー', color: 'text-yellow-600' };
-        } else if (statuses["MLE"] !== undefined) {
-            return { label: 'メモリオーバー', color: 'text-yellow-600' };
-        } else {
-            return { label: '不明', color: 'text-gray-500' };
-        }
+    const test_count = (statuses["WJ"] === undefined) ? '' : `(${sum_val - statuses["WJ"]} / ${sum_val})`;
+
+    if (status.length === 1 && status[0] === 'AC') {
+        return { label: '正解', color: 'text-green-600' };
+    } else if (statuses["IE"] !== undefined) {
+        return { label: `内部エラー ${test_count}`, color: 'text-red-600' };
+    } else if (statuses["CE"] !== undefined) {
+        return { label: `コンパイルエラー ${test_count}`, color: 'text-yellow-600' };
+    } else if (statuses["RE"] !== undefined) {
+        return { label: `実行時エラー ${test_count}`, color: 'text-yellow-600' };
+    } else if (statuses["WA"] !== undefined) {
+        return { label: `不正解 ${test_count}`, color: 'text-yellow-600' };
+    } else if (statuses["TLE"] !== undefined) {
+        return { label: `実行時間オーバー ${test_count}`, color: 'text-yellow-600' };
+    } else if (statuses["MLE"] !== undefined) {
+        return { label: `メモリオーバー ${test_count}`, color: 'text-yellow-600' };
     } else {
-        let finished = sum_val - statuses["WJ"];
-        return { label: `ジャッジ中 (${finished} / ${sum_val})`, color: 'text-gray-500' };
+        return { label: `ジャッジ中 ${test_count}`, color: 'text-gray-500' };
     }
 };
 
