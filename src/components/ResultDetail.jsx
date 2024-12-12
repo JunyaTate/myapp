@@ -3,6 +3,7 @@ import "ace-builds/src-noconflict/theme-github"; // or the theme you need
 import React, { useContext, useEffect, useState } from "react";
 import AceEditor from "react-ace";
 import reloadIcon from "../images/reload.svg";
+import AiComponent from "./Ai";
 import Loading from "./Loading";
 import { getStatusInfo } from "./Results";
 
@@ -127,6 +128,10 @@ const ResultDetail = ({ submissionId }) => {
                         </tr>
                     </tbody>
                 </table>
+                <div className="result-detail">
+                    <h3>AI レビュー</h3>
+                    <div><AiComponent submissionId={submissionId} /></div>
+                </div>
             </div>
         </div>
     );
