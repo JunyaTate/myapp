@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import reloadIcon from "../images/reload.svg";
 import Loading from "./Loading";
@@ -43,7 +43,7 @@ const Results = () => {
     const [selectedResult, setSelectedResult] = useState(null);
     const [viewMode, setViewMode] = useState('list'); // 'list' または 'detail'
 
-    const fetchResults = async () => {
+    const fetchResults = useCallback(async () => {
         try {
             const response = await fetch(`https://api.aiblecode.net/api/problem/${categoryId}/${problemId}/submissions`, {
                 method: 'GET',
@@ -66,35 +66,11 @@ const Results = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [categoryId, problemId]);
 
     useEffect(() => {
-        const fetchResults = async () => {
-            try {
-                const response = await fetch(`https://api.aiblecode.net/api/problem/${categoryId}/${problemId}/submissions`, {
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    credentials: 'include',
-                });
-                const data = await response.json();
-                if (response.ok) {
-                    setResults(data);
-                } else if (response.status === 401) {
-                    setError(data.error || '閲覧にはログインが必要です');
-                } else {
-                    setError(data.error || '提出結果の取得に失敗しました');
-                }
-            } catch (err) {
-                setError(err.message || '通信エラーが発生しました');
-            } finally {
-                setLoading(false);
-            }
-        };
         fetchResults();
-    }, [categoryId, problemId]);
+    }, [categoryId, problemId, fetchResults]);
 
     const handleReload = async () => {
         setLoading(true);

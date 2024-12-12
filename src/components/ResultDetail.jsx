@@ -1,6 +1,6 @@
 import "ace-builds/src-noconflict/mode-javascript"; // or the mode you need
 import "ace-builds/src-noconflict/theme-github"; // or the theme you need
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import AceEditor from "react-ace";
 import reloadIcon from "../images/reload.svg";
 import AiComponent from "./Ai";
@@ -17,7 +17,8 @@ const ResultDetail = ({ submissionId }) => {
     const { theme } = useContext(themeContext);
     const { fontSize } = useContext(fontSizeContext);
     const { tabSize } = useContext(tabSizeContext);
-    const fetchResult = async () => {
+
+    const fetchResult = useCallback(async () => {
         try {
             const response = await fetch(`https://api.aiblecode.net/api/submission/${submissionId}`, {
                 method: 'GET',
@@ -38,34 +39,11 @@ const ResultDetail = ({ submissionId }) => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [submissionId]);
 
     useEffect(() => {
-        const fetchResult = async () => {
-            try {
-                const response = await fetch(`https://api.aiblecode.net/api/submission/${submissionId}`, {
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    credentials: 'include',
-                });
-                const data = await response.json();
-                if (response.ok) {
-                    setResult(data);
-                } else {
-                    setError(data.error || '結果の取得に失敗しました');
-                }
-            } catch (err) {
-                setError(err.message || '通信エラーが発生しました');
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchResult();
-    }, [submissionId]);
+    }, [submissionId, fetchResult]);
 
     if (loading) {
         return <Loading />;
