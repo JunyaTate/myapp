@@ -128,9 +128,11 @@ const ResultDetail = ({ submissionId }) => {
                         </tr>
                     </tbody>
                 </table>
-                <div className="result-detail">
+                <div className="result-review">
                     <h3>AI レビュー</h3>
-                    <div><AiComponent submissionId={submissionId} /></div>
+                    <div className="review-container">
+                        <div className="problem-statement"><AiComponent submissionId={submissionId} /></div>
+                    </div>
                 </div>
             </div>
         </div>
