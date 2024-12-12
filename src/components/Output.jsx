@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Loading from './Loading.jsx';
 import Login from './Login.jsx';
-import { selectedTabContext, modeContext } from './ParamProvider.jsx';
+import { modeContext, selectedTabContext } from './ParamProvider.jsx';
 
 const Output = ({ code, checkAuthentication }) => {
     const { categoryId, problemId } = useParams();
@@ -85,7 +85,8 @@ const Output = ({ code, checkAuthentication }) => {
             const data = await response.json();
 
             if (response.ok) {
-                setSelectedTab("結果一覧");
+                setSelectedTab("問題");
+                setTimeout(() => setSelectedTab("結果一覧"), 3);
             } else {
                 if (response.status === 401) {
                     setOutput("");
@@ -101,7 +102,7 @@ const Output = ({ code, checkAuthentication }) => {
             setOutput("");
             setErrorOutput("エラー: 実行に失敗しました。");
         } finally {
-            setLoadingSubmit(false);
+            setTimeout(() => setLoadingSubmit(false), 5000);
         }
     };
 

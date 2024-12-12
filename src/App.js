@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Route, BrowserRouter as Router, Routes, Navigate } from 'react-router-dom';
+import { Link, Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import AceEditorComponent from './components/AceEditor.jsx';
 import Login from './components/Login.jsx';
 
@@ -10,6 +10,7 @@ import './components/styles/Learn.css';
 import './components/styles/Login.css';
 import './components/styles/Output.css';
 import './components/styles/Problem.css';
+import './components/styles/ResultDetail.css';
 import './components/styles/Results.css';
 
 // AceEditorに必要なライブラリをインポート
@@ -25,7 +26,7 @@ import 'ace-builds/src-noconflict/theme-solarized_light';
 
 
 import Learn from './components/Learn.jsx';
-import { SelectedTabProvider, ModeProvider } from './components/ParamProvider.jsx';
+import { FontSizeProvider, ModeProvider, SelectedTabProvider, TabSizeProvider, ThemeProvider } from './components/ParamProvider.jsx';
 
 function App() {
   return (
@@ -44,7 +45,13 @@ function App() {
               </header>
               <SelectedTabProvider>
                 <ModeProvider>
-                  <AceEditorComponent />
+                  <ThemeProvider>
+                    <FontSizeProvider>
+                      <TabSizeProvider>
+                        <AceEditorComponent />
+                      </TabSizeProvider>
+                    </FontSizeProvider>
+                  </ThemeProvider>
                 </ModeProvider>
               </SelectedTabProvider>
             </div>
