@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import 'katex/dist/katex.min.css';
@@ -11,9 +11,9 @@ import remarkMath from 'remark-math';
 
 import Loading from './Loading';
 
+import CodeBlock from "./CodeBlock";
 import './styles/App.css';
 import './styles/Problem.css'; // スタイルを外部ファイルで管理
-import CodeBlock from "./CodeBlock";
 
 
 const Problem = () => {
@@ -22,22 +22,21 @@ const Problem = () => {
   const [loading, setLoading] = useState(true); // ローディング状態
   const [error, setError] = useState(null); // エラー状態
 
-  useEffect(() => {
-    // 問題データを取得するAPI呼び出し
-    async function fetchProblem() {
-      try {
-        setLoading(true);
-        const response = await axios.get(`https://api.aiblecode.net/api/problem/${categoryId}/${problemId}`);
-        setProblemData(response.data); // 問題データを状態に設定
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
+  const fetchProblem = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`https://api.aiblecode.net/api/problem/${categoryId}/${problemId}`);
+      setProblemData(response.data); // 問題データを状態に設定
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
     }
-
-    fetchProblem();
   }, [categoryId, problemId]);
+
+  useEffect(() => {
+    fetchProblem();
+  }, [categoryId, problemId, fetchProblem]);
 
   if (loading) {
     return <Loading />;
