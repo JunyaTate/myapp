@@ -1,32 +1,59 @@
+.results-container {
+    background-color: #2c3038;
+    height: 100%;
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+}
+
 /* 全体のテーブルスタイル */
 .result-list-table {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0; /* 表の上下左右にスペースを作成 */
+    margin: 20px 0;
+    margin-bottom: 50px;
+    /* 表の上下左右にスペースを作成 */
+    border: 1px solid #595e6b;
+    /* 薄い外枠 */
+}
+
+.result-list-table th {
+    padding: 8px 12px;
+    /* セル内余白 */
 }
 
 /* テーブルのヘッダー行のスタイル */
 .result-list-table thead tr {
-    background-color: #2c3038; /* 背景色 */
-    color: white; /* ヘッダーの文字色 */
-    text-align: center; /* 文字を中央揃え */
-    border-bottom: 2px solid #4d5362; /* 区切り線 */
+    background-color: #2c3038;
+    /* 背景色 */
+    color: white;
+    /* ヘッダーの文字色 */
+    text-align: center;
+    /* 文字を中央揃え */
+    border-bottom: 2px solid #4d5362;
+    /* 区切り線 */
 }
 
 /* テーブルのデータ行のスタイル */
 .result-list-table tbody tr {
-    background-color: #4d5362; /* データ行の背景色 */
-    text-align: center; /* 文字を中央揃え */
-    border-bottom: 1px solid #595e6b; /* 行ごとの区切り線 */
+    background-color: #4d5362;
+    /* データ行の背景色 */
+    text-align: center;
+    /* 文字を中央揃え */
+    border-bottom: 1px solid #595e6b;
+    /* 行ごとの区切り線 */
 }
 
 /* ジャッジ結果の文字色 */
 .result-list-table tbody tr td {
-    padding: 8px 12px; /* セル内余白 */
+    padding: 8px 12px;
+    /* セル内余白 */
 }
 
-.result-list-table tbody tr td:nth-child(3) { /* ジャッジ結果の列 */
-    font-weight: bold; /* 文字を太字に */
+.result-list-table tbody tr td:nth-child(3) {
+    /* ジャッジ結果の列 */
+    font-weight: bold;
+    /* 文字を太字に */
 }
 
 /* 詳細ボタンのスタイル（オプション） */
@@ -40,7 +67,31 @@
 }
 
 .result-list-table tbody tr td button:hover {
-    background-color: #4d5362;
+    background-color: #3c4b5a;
+}
+
+.reload-button {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    margin-left: 5px;
+    border-radius: 50%;
+    border: none;
+    background-color: #2c3038;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    background-color: #2c3038;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.reload-button:hover {
+    background-color: #3c4b5a;
 }
 
 .text-gray-500 {
@@ -54,4 +105,7 @@
 .text-yellow-600 {
     color: #fbbf24;
 }
-    
+
+.text-red-600 {
+    color: #f87171;
+}

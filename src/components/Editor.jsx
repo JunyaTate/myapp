@@ -1,14 +1,14 @@
-import React, { useState, useContext } from 'react';
-import { modeContext } from './ParamProvider';
+import React, { useContext, useState } from 'react';
 import AceEditor from 'react-ace';
 import settingIcon from '../images/settingicon.png';
+import { fontSizeContext, modeContext, tabSizeContext, themeContext } from './ParamProvider';
 
 
 const Editor = ({ checkAuthentication, code, setCode }) => {
-    const [theme, setTheme] = useState("monokai");
+    const { theme, setTheme } = useContext(themeContext);
     const { mode, setMode } = useContext(modeContext);
-    const [fontSize, setFontSize] = useState(14);
-    const [tabSize, setTabSize] = useState(4);
+    const { fontSize, setFontSize } = useContext(fontSizeContext);
+    const { tabSize, setTabSize } = useContext(tabSizeContext);
     const [showSettings, setShowSettings] = useState(false);
 
     const handleFontSizeIncrease = () => {
