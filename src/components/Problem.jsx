@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import 'katex/dist/katex.min.css';
@@ -16,7 +16,7 @@ import './styles/App.css';
 import './styles/Problem.css'; // スタイルを外部ファイルで管理
 
 
-const Problem = () => {
+const Problem = memo(() => {
   const { categoryId, problemId } = useParams();
   const [problemData, setProblemData] = useState(null); // 問題データの状態管理
   const [loading, setLoading] = useState(true); // ローディング状態
@@ -74,6 +74,6 @@ const Problem = () => {
       </div>
     </div>
   );
-}
+});
 
 export default Problem;
