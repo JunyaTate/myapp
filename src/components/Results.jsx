@@ -123,7 +123,9 @@ const Results = () => {
                                         <td>{result.language}</td>
                                         <td className={statusInfo.color}>{statusInfo.label}</td>
                                         <td>
-                                            <button onClick={() => handleDetailClick(result)}>詳細</button>
+                                            {result.statuses["WJ"] === undefined ?
+                                                <button onClick={() => handleDetailClick(result)}>詳細</button> : <p>-</p>
+                                            }
                                         </td>
                                     </tr>
                                 );
