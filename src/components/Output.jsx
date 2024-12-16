@@ -178,8 +178,7 @@ const Output = ({ code, checkAuthentication }) => {
             {showLoginForm && (
                 <Login
                     setLoginForm={setShowLoginForm}
-                    checkAuthentication={checkAuthentication}
-                />
+                    checkAuthentication={checkAuthentication} />
             )}
         </div>
     );

@@ -102,7 +102,8 @@ const Results = () => {
             </div>
 
             {results.length === 0 ? (
-                <p className="not-result">提出結果がありません</p>
+                <p className="not-result">提出してね😜😜😜😜😜😜😜😜</p>
+                
             ) : (
                 <div className="result-list-container">
                     <table className="result-list-table">

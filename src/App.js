@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import AceEditorComponent from './components/AceEditor.jsx';
 import Login from './components/Login.jsx';
+import Logo from './images/Logo.jpg';
 
 import './components/styles/AceEditor.css';
 import './components/styles/App.css';
@@ -42,6 +43,7 @@ function App() {
                   <Link to="/learn">&lt;</Link> {/* Learnへのリンク */}
                 </span>
                 <h1>AIbleCode</h1>
+                <p><img src={Logo} alt="AIbleCode" className='header-logo'/></p>
               </header>
               <SelectedTabProvider>
                 <ModeProvider>

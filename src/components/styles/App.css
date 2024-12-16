@@ -71,20 +71,8 @@ html,body{
   color: inherit; 
 }
 
-
-/*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*/
+.header-logo {
+  margin-top : 15px;
+  width: 40px;
+  height: 40px;
+}
