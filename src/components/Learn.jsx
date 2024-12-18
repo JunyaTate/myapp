@@ -86,7 +86,7 @@ const LearnComponent = () => {
           {isAuthenticated ? (
             <button className="logout-button" onClick={handleLogoutClick}>ログアウト</button>
           ) : (
-            <button className="logout-button" onClick={handleLoginClick}>ログイン</button>
+            <button className="logout-button" onClick={handleLoginClick}>ログイン・新規登録</button>
           )}
           {showLoginForm && <Login setLoginForm={setLoginForm} checkAuthentication={checkAuthentication} />}
           <a className="github-link" href="https://github.com/your-repo" target="_blank" rel="noopener noreferrer">GitHub</a>

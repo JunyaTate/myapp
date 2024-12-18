@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 const Login = ({ setLoginForm, checkAuthentication }) => {
   const [activeTab, setActiveTab] = useState('login'); // 'login' or 'signup'
@@ -7,13 +7,29 @@ const Login = ({ setLoginForm, checkAuthentication }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
+  
+  // Ref to track if mouse down started inside the popup
+  const mouseDownInsideRef = useRef(false);
 
   const closeLoginForm = () => {
     setLoginForm(false);
   };
 
-  const handleOverlayClick = (event) => {
+  const handleOverlayMouseDown = (event) => {
+    // Check if mouse down is on the overlay
     if (event.target.className === 'login-popup-overlay') {
+      mouseDownInsideRef.current = false;
+    } else {
+      mouseDownInsideRef.current = true;
+    }
+  };
+
+  const handleOverlayMouseUp = (event) => {
+    // Only close if mouse down was on the overlay and mouse up is on the overlay
+    if (
+      !mouseDownInsideRef.current && 
+      event.target.className === 'login-popup-overlay'
+    ) {
       closeLoginForm();
     }
   };
@@ -28,13 +44,11 @@ const Login = ({ setLoginForm, checkAuthentication }) => {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        withCredentials: true // セッションのcookieを含めるために追加
+        withCredentials: true
       });
       if (response.status === 200) {
-        // ログイン成功時の処理（例: トークンの保存など）
         console.log('Login successful:', response.data);
         closeLoginForm();
-        // Call the checkAuthentication function passed from parent component
         checkAuthentication();
       }
     } catch (err) {
@@ -63,10 +77,25 @@ const Login = ({ setLoginForm, checkAuthentication }) => {
         body: JSON.stringify(requestBody),
         credentials: 'include',
       });
+      
       if (response.status === 200) {
-        // ログイン成功時の処理（例: トークンの保存など）
-        console.log('Signin successful:', response.data);
-        setActiveTab('login');
+        // Automatically log in after successful signup
+        const loginResponse = await axios.post('https://api.aiblecode.net/api/token', new URLSearchParams({
+          username,
+          password,
+          grant_type: 'password'
+        }), {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          withCredentials: true
+        });
+
+        if (loginResponse.status === 200) {
+          console.log('Signup and login successful');
+          closeLoginForm();
+          checkAuthentication();
+        }
       } else if (response.status === 400) {
         setError('ユーザー名が既に使用されています');
       }
@@ -74,10 +103,14 @@ const Login = ({ setLoginForm, checkAuthentication }) => {
       setError('新規登録に失敗しました。');
       console.error('Signup error:', err);
     }
-  }
+  };
 
   return (
-    <div className='login-popup-overlay' onClick={handleOverlayClick}>
+    <div 
+      className='login-popup-overlay' 
+      onMouseDown={handleOverlayMouseDown}
+      onMouseUp={handleOverlayMouseUp}
+    >
       <div className='login-popup-settings'>
         <div className='login-popup-header'>
           <div className="login-popup-tabs">
