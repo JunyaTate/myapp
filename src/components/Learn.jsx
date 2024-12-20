@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Loading from './Loading.jsx';
 import Login from './Login.jsx';
+import CheckMark from '../images/checkmark.png';
 
 const LearnComponent = () => {
   const [showLoginForm, setLoginForm] = useState(false);
@@ -10,6 +11,7 @@ const LearnComponent = () => {
   const [problemList, setProblemList] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState('Guest');
+  const [acceptedProblems, setAcceptedProblems] = useState({});  // 問題ごとの達成状態を管理
 
   const handleLoginClick = () => {
     setLoginForm(!showLoginForm);
@@ -33,12 +35,7 @@ const LearnComponent = () => {
 
       if (authResponse.data.is_authenticated) {
         const userResponse = await axios.get('https://api.aiblecode.net/api/my_user', { withCredentials: true });
-
-        if (userResponse.data) {
-          setUsername(userResponse.data.user.username || 'Guest');
-        } else {
-          setUsername('Guest');
-        }
+        setUsername(userResponse.data?.user?.username || 'Guest');
       } else {
         setUsername('Guest');
       }
@@ -49,6 +46,24 @@ const LearnComponent = () => {
     }
   };
 
+  // 個別の問題の達成状態を確認する関数
+  const checkProblemAcceptance = async (categoryPathId, problemPathId) => {
+    try {
+      const response = await axios.get(
+        `https://api.aiblecode.net/api/problem/${categoryPathId}/${problemPathId}/is_accepted`,
+        { withCredentials: true }
+      );
+      const key = `${categoryPathId}/${problemPathId}`;
+      setAcceptedProblems(prev => ({
+        ...prev,
+        [key]: response.data.is_accepted
+      }));
+      console.log(`Problem ${key} acceptance status:`, response.data.is_accepted);
+    } catch (error) {
+      console.error('Error checking problem acceptance:', error);
+    }
+  };
+
   useEffect(() => {
     checkAuthentication();
   }, []);
@@ -56,13 +71,19 @@ const LearnComponent = () => {
   useEffect(() => {
     const fetchCategoriesAndProblems = async () => {
       try {
-        // Fetch categories
-        const categoriesResponse = await axios.get('https://api.aiblecode.net/api/category_list');
+        const [categoriesResponse, problemListResponse] = await Promise.all([
+          axios.get('https://api.aiblecode.net/api/category_list'),
+          axios.get('https://api.aiblecode.net/api/problem_list')
+        ]);
         setCategoryList(categoriesResponse.data);
-
-        // Fetch problem lists
-        const problemListResponse = await axios.get('https://api.aiblecode.net/api/problem_list');
         setProblemList(problemListResponse.data);
+
+        // 各問題の達成状態を確認
+        problemListResponse.data.forEach(category => {
+          category.problems.forEach(problem => {
+            checkProblemAcceptance(category.path_id, problem.path_id);
+          });
+        });
       } catch (error) {
         console.error('Error fetching categories or problems:', error);
       }
@@ -105,10 +126,15 @@ const LearnComponent = () => {
                   <li key={problem.id} className="problem-item">
                     <Link
                       to={`/problem/${category.path_id}/${problem.path_id}`}
-                      className="problem-button"
+                      className={`problem-button ${acceptedProblems[`${category.path_id}/${problem.path_id}`] ? 'accepted' : ''}`}
                     >
-                      <p className={`problem-level-${problem.level}`}>{"★".repeat(problem.level)}</p>
-                      {problem.title}
+                      <div className="flex items-center w-full relative">
+                        <p className={`problem-level-${problem.level}`}>{"★".repeat(problem.level)}</p>
+                        <span>{problem.title}</span>
+                        {acceptedProblems[`${category.path_id}/${problem.path_id}`] && (
+                          <span className="checkmark"><img src={CheckMark} alt="Checkmark" width={35} height={35}/></span>
+                        )}
+                      </div>
                     </Link>
                   </li>
                 ))}

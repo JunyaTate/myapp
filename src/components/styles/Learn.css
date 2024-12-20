@@ -261,6 +261,21 @@
   /* 押下時の影 */
 }
 
+.problem-button.accepted {
+  background-color: #CBEFC0;
+}
+
+.problem-button.accepted:hover {
+  background-color: #b7e9a8;
+}
+
+.problem-button.accepted:active {
+  transform: translateY(1px);
+  /* 押した時の沈む表現 */
+  box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.2);
+  /* 押下時の影 */
+}
+
 .problem-level-1 {
   font-size: 15px;
   padding: 0;
@@ -295,3 +310,20 @@
   margin: 0;
   color: #aa66c9;
 }
+
+.problem-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* テキストとチェックマークを両端に配置 */
+  padding-right: 35px; /* チェックマーク分のスペースを確保 */
+}
+
+.checkmark {
+  position: absolute;
+  right: 30px; /* ボタンの右端から10px離す */
+  top: 60%;
+  transform: translateY(-50%); /* 縦方向で中央揃え */
+}
+
+

@@ -10,23 +10,30 @@ import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 
 import Loading from './Loading';
-
 import CodeBlock from "./CodeBlock";
+import CheckMark from '../images/checkmark.png'; // Ensure this image path is correct
 import './styles/App.css';
-import './styles/Problem.css'; // スタイルを外部ファイルで管理
-
+import './styles/Problem.css';
 
 const Problem = memo(() => {
   const { categoryId, problemId } = useParams();
-  const [problemData, setProblemData] = useState(null); // 問題データの状態管理
-  const [loading, setLoading] = useState(true); // ローディング状態
-  const [error, setError] = useState(null); // エラー状態
+  const [problemData, setProblemData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [isAccepted, setIsAccepted] = useState(false); // Track acceptance status
 
   const fetchProblem = useCallback(async () => {
     try {
       setLoading(true);
       const response = await axios.get(`https://api.aiblecode.net/api/problem/${categoryId}/${problemId}`);
-      setProblemData(response.data); // 問題データを状態に設定
+      setProblemData(response.data);
+      
+      // Fetch the is_accepted status
+      const acceptanceResponse = await axios.get(
+        `https://api.aiblecode.net/api/problem/${categoryId}/${problemId}/is_accepted`,
+        { withCredentials: true }
+      );
+      setIsAccepted(acceptanceResponse.data.is_accepted);
     } catch (err) {
       setError(err);
     } finally {
@@ -51,14 +58,17 @@ const Problem = memo(() => {
   }
 
   return (
-
     <div className="problem-container">
-      {/* タイトル部分 */}
+      {/* Title Section */}
       <div className="problem-title">
-        <h2>{problemData.title}</h2>
-        <p>実行時間: {problemData.time_limit} sec以内 ／ メモリ: {problemData.memory_limit} MiB以内  （正解者数: {problemData.accepted_count} 名）</p>
+        <h2>
+          {problemData.title}
+          {isAccepted && <img src={CheckMark} alt="Checkmark" width={25} height={25} className="checkmark-icon" />}
+        </h2>
+        <p>実行時間: {problemData.time_limit} sec以内 ／ メモリ: {problemData.memory_limit} MiB以内 （正解者数: {problemData.accepted_count} 名）</p>
       </div>
 
+      {/* Problem Statement */}
       <div className="problem-statement">
         <ReactMarkdown
           remarkPlugins={[remarkMath, remarkGfm]}
