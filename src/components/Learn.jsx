@@ -24,6 +24,7 @@ const LearnComponent = () => {
       setIsAuthenticated(false);
       setUsername('Guest');
       console.log('Logout successful');
+      window.location.reload();
     } catch (error) {
       console.error('Logout error:', error);
     }
@@ -138,17 +139,17 @@ const LearnComponent = () => {
                 {category.problems.map((problem) => (
                   <li key={problem.id} className="problem-item">
                     <Link
-                      to={`/problem/${category.path_id}/${problem.path_id}`}
-                      className={`problem-button ${acceptedProblems[`${category.path_id}/${problem.path_id}`] ? 'accepted' : ''}`}
-                    >
-                      <div className="flex items-center w-full relative">
-                        <p className={`problem-level-${problem.level}`}>{"★".repeat(problem.level)}</p>
-                        <span>{problem.title}</span>
-                        {acceptedProblems[`${category.path_id}/${problem.path_id}`] && (
-                          <span className="checkmark"><img src={CheckMark} alt="Checkmark" width={35} height={35}/></span>
-                        )}
-                      </div>
-                    </Link>
+  to={`/problem/${category.path_id}/${problem.path_id}`}
+  className={`problem-button ${acceptedProblems[`${category.path_id}/${problem.path_id}`] ? 'accepted' : ''}`}
+>
+  <p className={`problem-level-${problem.level}`}>{"★".repeat(problem.level)}</p>
+  <div className="title-container">
+    <span>{problem.title}</span>
+    {acceptedProblems[`${category.path_id}/${problem.path_id}`] && (
+      <img src={CheckMark} alt="Checkmark" className="checkmark" width={35} height={35}/>
+    )}
+  </div>
+</Link>
                   </li>
                 ))}
               </ul>
