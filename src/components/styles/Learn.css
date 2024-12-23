@@ -321,9 +321,8 @@
 
 .checkmark {
   position: absolute;
-  right: 30px;
-  top: 60%;
-  transform: translateY(-50%);
+  right: 0;
+  top: 50%;
 }
 
 
