@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "axios"; 
 import React, { memo, useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -25,15 +25,17 @@ const Problem = memo(() => {
   const fetchProblem = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`https://api.aiblecode.net/api/problem/${categoryId}/${problemId}`);
-      setProblemData(response.data);
+      const response = await axios.get(`https://api.aiblecode.net/api/problem/${categoryId}/${problemId}`, {
+        withCredentials: true,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
       
-      // Fetch the is_accepted status
-      const acceptanceResponse = await axios.get(
-        `https://api.aiblecode.net/api/problem/${categoryId}/${problemId}/is_accepted`,
-        { withCredentials: true }
-      );
-      setIsAccepted(acceptanceResponse.data.is_accepted);
+      const data = response.data;
+      console.log(data); // デバッグ用：レスポンスを確認
+      setProblemData(data);
+      setIsAccepted(data.is_accepted); // Update isAccepted based on response
     } catch (err) {
       setError(err);
     } finally {

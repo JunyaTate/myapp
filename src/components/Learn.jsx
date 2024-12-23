@@ -1,8 +1,9 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import Loading from './Loading.jsx';
 import Login from './Login.jsx';
+import Ranking from './Ranking.jsx';
 import CheckMark from '../images/checkmark.png';
 
 const LearnComponent = () => {
@@ -11,7 +12,7 @@ const LearnComponent = () => {
   const [problemList, setProblemList] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState('Guest');
-  const [acceptedProblems, setAcceptedProblems] = useState({});  // 問題ごとの達成状態を管理
+  const [acceptedProblems, setAcceptedProblems] = useState({}); // 問題ごとの達成状態を管理
 
   const handleLoginClick = () => {
     setLoginForm(!showLoginForm);
@@ -47,22 +48,27 @@ const LearnComponent = () => {
   };
 
   // 個別の問題の達成状態を確認する関数
-  const checkProblemAcceptance = async (categoryPathId, problemPathId) => {
+  const checkProblemAcceptance = useCallback(async (categoryPathId, problemPathId) => {
+    if (!isAuthenticated) return;
+
     try {
       const response = await axios.get(
-        `https://api.aiblecode.net/api/problem/${categoryPathId}/${problemPathId}/is_accepted`,
+        `https://api.aiblecode.net/api/problem/${categoryPathId}/${problemPathId}`,
         { withCredentials: true }
       );
       const key = `${categoryPathId}/${problemPathId}`;
       setAcceptedProblems(prev => ({
         ...prev,
-        [key]: response.data.is_accepted
+        [key]: response.data.is_accepted // is_acceptedを保存
       }));
-      console.log(`Problem ${key} acceptance status:`, response.data.is_accepted);
     } catch (error) {
-      console.error('Error checking problem acceptance:', error);
+      if (error.response?.status === 401) {
+        console.warn('Unauthorized access detected.');
+      } else {
+        console.error('Error checking problem acceptance:', error);
+      }
     }
-  };
+  }, [isAuthenticated]);
 
   useEffect(() => {
     checkAuthentication();
@@ -78,18 +84,19 @@ const LearnComponent = () => {
         setCategoryList(categoriesResponse.data);
         setProblemList(problemListResponse.data);
 
-        // 各問題の達成状態を確認
-        problemListResponse.data.forEach(category => {
-          category.problems.forEach(problem => {
-            checkProblemAcceptance(category.path_id, problem.path_id);
+        if (isAuthenticated) {
+          problemListResponse.data.forEach(category => {
+            category.problems.forEach(problem => {
+              checkProblemAcceptance(category.path_id, problem.path_id);
+            });
           });
-        });
+        }
       } catch (error) {
         console.error('Error fetching categories or problems:', error);
       }
     };
     fetchCategoriesAndProblems();
-  }, []);
+  }, [isAuthenticated, checkProblemAcceptance]);
 
   return (
     <>
@@ -102,12 +109,18 @@ const LearnComponent = () => {
           )) : <Loading />
           }
         </ul>
+        <h2 className="sidebar-heading">ランキング</h2>
+        <ul>
+          <li><Ranking/></li>
+        </ul>
         <div className="sidebar-footer">
           <p className="user-name">{username}</p>
           {isAuthenticated ? (
             <button className="logout-button" onClick={handleLogoutClick}>ログアウト</button>
           ) : (
-            <button className="logout-button" onClick={handleLoginClick}>ログイン・新規登録</button>
+            <>
+              <button className="logout-button" onClick={handleLoginClick}>ログイン・新規登録</button>
+            </>
           )}
           {showLoginForm && <Login setLoginForm={setLoginForm} checkAuthentication={checkAuthentication} />}
           <a className="github-link" href="https://github.com/your-repo" target="_blank" rel="noopener noreferrer">GitHub</a>

@@ -174,7 +174,7 @@
   /* 親要素内で高さを伸縮可能に */
   overflow-y: auto;
   /* 子要素のスクロールを有効化 */
-  padding: 50px;
+  padding: 20px;
   /* 適切な余白を設定 */
 }
 
@@ -311,19 +311,19 @@
   color: #aa66c9;
 }
 
-.problem-button {
+/*.problem-button {
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* テキストとチェックマークを両端に配置 */
-  padding-right: 35px; /* チェックマーク分のスペースを確保 */
-}
+  justify-content: space-between;
+  padding-right: 35px; 
+}*/
 
 .checkmark {
   position: absolute;
-  right: 30px; /* ボタンの右端から10px離す */
+  right: 30px;
   top: 60%;
-  transform: translateY(-50%); /* 縦方向で中央揃え */
+  transform: translateY(-50%);
 }
 
 
