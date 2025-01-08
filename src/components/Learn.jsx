@@ -23,6 +23,13 @@ const LearnComponent = () => {
     setShowRanking(!showRanking);
   };
 
+  const handleCategoryClick = () => {
+    if (showRanking) {
+      setShowRanking(false); // ランキング画面を閉じる
+    }
+  };
+  
+
   const handleLogoutClick = async () => {
     try {
       await axios.post('https://api.aiblecode.net/api/logout', {}, { withCredentials: true });
@@ -111,9 +118,12 @@ const LearnComponent = () => {
         <h2 className="sidebar-heading">学習</h2>
         <ul>
           {categoryList ? categoryList.map((category) => (
-            <li key={category.id}><a href={`#category-${category.id}`}>{category.title}</a></li>
-          )) : <Loading />
-          }
+            <li key={category.id}>
+              <a href={`#category-${category.id}`} onClick={handleCategoryClick}>
+                {category.title}
+              </a>
+            </li>
+          )) : <Loading />}
         </ul>
         <div className="sidebar-footer">
           <p className="user-name">{username}</p>
@@ -125,13 +135,9 @@ const LearnComponent = () => {
             </>
           )}
           {showLoginForm && <Login setLoginForm={setLoginForm} checkAuthentication={checkAuthentication} />}
-          <ul>
-            <li>
                 <button className="ranking-button" onClick={handleRankingClick}>
                   {showRanking ? '学習メニューに戻る' : 'ランキングを表示'}
                 </button>
-            </li>
-          </ul>
           <p className="credits">©中島かんぱにー<br />since 2024-2025</p>
         </div>
       </div>
