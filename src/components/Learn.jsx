@@ -119,7 +119,7 @@ const LearnComponent = () => {
         <ul>
         <li>
             <button className="ranking-button" onClick={handleRankingClick}>
-              {showRanking ? 'ランキングを閉じる' : 'ランキングを表示'}
+              {showRanking ? '学習メニューに戻る' : 'ランキングを表示'}
             </button>
         </li>
         </ul>
