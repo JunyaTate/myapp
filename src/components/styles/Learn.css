@@ -116,6 +116,29 @@
   /* スムーズな変化を追加 */
 }
 
+.ranking-button {
+  background-color: #2c3038;
+  /* ボタンの背景色 */
+  color: #ffffff;
+  /* ボタンの文字色 */
+  width: 100%;
+  border: none;
+  /* ボーダーを削除 */
+  padding: 10px 20px;
+  /* パディング */
+  cursor: pointer;
+  /* カーソルをポインターに */
+  margin-bottom: 10px;
+  /* 下にスペースを空ける */
+  transition: background-color 0.3s ease;
+  /* スムーズな変化を追加 */
+}
+
+.ranking-button:hover {
+  background-color: #4d5362;
+  /* ホバー時の背景色 */
+}
+
 .logout-button:hover {
   background-color: #4d5362;
   /* ホバー時の背景色 */

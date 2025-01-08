@@ -13,9 +13,14 @@ const LearnComponent = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState('Guest');
   const [acceptedProblems, setAcceptedProblems] = useState({}); // 問題ごとの達成状態を管理
+  const [showRanking, setShowRanking] = useState(false); // ランキング表示の状態追加
 
   const handleLoginClick = () => {
     setLoginForm(!showLoginForm);
+  };
+
+  const handleRankingClick = () => {
+    setShowRanking(!showRanking);
   };
 
   const handleLogoutClick = async () => {
@@ -112,7 +117,11 @@ const LearnComponent = () => {
         </ul>
         <h2 className="sidebar-heading">ランキング</h2>
         <ul>
-          <li><Ranking/></li>
+        <li>
+            <button className="ranking-button" onClick={handleRankingClick}>
+              {showRanking ? 'ランキングを閉じる' : 'ランキングを表示'}
+            </button>
+        </li>
         </ul>
         <div className="sidebar-footer">
           <p className="user-name">{username}</p>
@@ -129,6 +138,11 @@ const LearnComponent = () => {
         </div>
       </div>
       <div className="learn-container">
+      {showRanking ? (
+          <div className="learn-base">
+            <Ranking />
+          </div>
+        ) : (
         <div className="learn-base">
           <h1 className="learn-title">学習</h1>
           {problemList ? problemList.map((category) => (
@@ -139,23 +153,24 @@ const LearnComponent = () => {
                 {category.problems.map((problem) => (
                   <li key={problem.id} className="problem-item">
                     <Link
-  to={`/problem/${category.path_id}/${problem.path_id}`}
-  className={`problem-button ${acceptedProblems[`${category.path_id}/${problem.path_id}`] ? 'accepted' : ''}`}
->
-  <p className={`problem-level-${problem.level}`}>{"★".repeat(problem.level)}</p>
-  <div className="title-container">
-    <span>{problem.title}</span>
-    {acceptedProblems[`${category.path_id}/${problem.path_id}`] && (
-      <img src={CheckMark} alt="Checkmark" className="checkmark" width={35} height={35}/>
-    )}
-  </div>
-</Link>
+                      to={`/problem/${category.path_id}/${problem.path_id}`}
+                      className={`problem-button ${acceptedProblems[`${category.path_id}/${problem.path_id}`] ? 'accepted' : ''}`}
+                    >
+                      <p className={`problem-level-${problem.level}`}>{"★".repeat(problem.level)}</p>
+                      <div className="title-container">
+                        <span>{problem.title}</span>
+                        {acceptedProblems[`${category.path_id}/${problem.path_id}`] && (
+                          <img src={CheckMark} alt="Checkmark" className="checkmark" width={35} height={35}/>
+                        )}
+                      </div>
+                    </Link>
                   </li>
                 ))}
               </ul>
             </div>
           )) : <Loading />}
         </div>
+        )}
       </div>
     </>
   );
