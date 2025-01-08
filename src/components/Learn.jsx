@@ -115,14 +115,6 @@ const LearnComponent = () => {
           )) : <Loading />
           }
         </ul>
-        <h2 className="sidebar-heading">ランキング</h2>
-        <ul>
-        <li>
-            <button className="ranking-button" onClick={handleRankingClick}>
-              {showRanking ? '学習メニューに戻る' : 'ランキングを表示'}
-            </button>
-        </li>
-        </ul>
         <div className="sidebar-footer">
           <p className="user-name">{username}</p>
           {isAuthenticated ? (
@@ -133,7 +125,13 @@ const LearnComponent = () => {
             </>
           )}
           {showLoginForm && <Login setLoginForm={setLoginForm} checkAuthentication={checkAuthentication} />}
-          <a className="github-link" href="https://github.com/your-repo" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <ul>
+            <li>
+                <button className="ranking-button" onClick={handleRankingClick}>
+                  {showRanking ? '学習メニューに戻る' : 'ランキングを表示'}
+                </button>
+            </li>
+          </ul>
           <p className="credits">©中島かんぱにー<br />since 2024-2025</p>
         </div>
       </div>
