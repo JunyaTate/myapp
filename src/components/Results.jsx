@@ -31,6 +31,17 @@ export const getStatusInfo = (statuses) => {
     }
 };
 
+export const mapStatus = (status) => {
+    if (status === "AC") return { label: '正解', color: 'text-green-600' };
+    if (status === "IE") return { label: `内部エラー`, color: 'text-red-600' };
+    if (status === "CE") return { label: `コンパイルエラー`, color: 'text-yellow-600' };
+    if (status === "RE") return { label: `実行時エラー`, color: 'text-yellow-600' };
+    if (status === "WA") return { label: `不正解`, color: 'text-yellow-600' };
+    if (status === "TLE") return { label: `実行時間オーバー`, color: 'text-yellow-600' };
+    if (status === "MLE") return { label: `メモリオーバー`, color: 'text-yellow-600' };
+    return { label: `ジャッジ中`, color: 'text-gray-500' };
+}
+
 
 const Results = () => {
     const { categoryId, problemId } = useParams();
@@ -102,8 +113,8 @@ const Results = () => {
             </div>
 
             {results.length === 0 ? (
-                <p className="not-result">提出してね😜😜😜😜😜😜😜😜</p>
-                
+                <p className="not-result">提出してください</p>
+
             ) : (
                 <div className="result-list-container">
                     <table className="result-list-table">
