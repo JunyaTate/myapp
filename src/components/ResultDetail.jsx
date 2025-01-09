@@ -5,7 +5,7 @@ import AceEditor from "react-ace";
 import reloadIcon from "../images/reload.svg";
 import AiComponent from "./Ai";
 import Loading from "./Loading";
-import { getStatusInfo } from "./Results";
+import { getStatusInfo, mapStatus } from "./Results";
 
 import { fontSizeContext, modeContext, tabSizeContext, themeContext } from "./ParamProvider";
 
@@ -106,6 +106,31 @@ const ResultDetail = ({ submissionId }) => {
                         </tr>
                     </tbody>
                 </table>
+                <details>
+                    <summary>詳細結果</summary>
+                    <table className="result-list-table">
+                        <thead>
+                            <tr>
+                                <th>テストケース</th>
+                                <th>ジャッジ結果</th>
+                                <th>実行時間</th>
+                                <th>使用メモリ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {result.details.map((detail) => {
+                                return (
+                                    <tr>
+                                        <td>{detail.testcase_name}</td>
+                                        <td className={mapStatus(detail.status).color}>{mapStatus(detail.status).label}</td>
+                                        <td>{detail.time} sec</td>
+                                        <td>{detail.memory / 1000} MB</td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                </details>
                 <div className="result-review">
                     <h3>AI レビュー</h3>
                     <div className="review-container">

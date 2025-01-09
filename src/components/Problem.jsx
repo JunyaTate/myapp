@@ -1,4 +1,4 @@
-import axios from "axios"; 
+import axios from "axios";
 import React, { memo, useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -9,9 +9,9 @@ import rehypeRaw from "rehype-raw";
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 
-import Loading from './Loading';
-import CodeBlock from "./CodeBlock";
 import CheckMark from '../images/checkmark.png'; // Ensure this image path is correct
+import CodeBlock from "./CodeBlock";
+import Loading from './Loading';
 import './styles/App.css';
 import './styles/Problem.css';
 
@@ -31,7 +31,7 @@ const Problem = memo(() => {
           'Accept': 'application/json'
         }
       });
-      
+
       const data = response.data;
       console.log(data); // デバッグ用：レスポンスを確認
       setProblemData(data);
@@ -67,7 +67,7 @@ const Problem = memo(() => {
           {problemData.title}
           {isAccepted && <img src={CheckMark} alt="Checkmark" width={25} height={25} className="checkmark-icon" />}
         </h2>
-        <p>実行時間: {problemData.time_limit} sec以内 ／ メモリ: {problemData.memory_limit} MiB以内 （正解者数: {problemData.accepted_count} 名）</p>
+        <p>実行時間: {problemData.time_limit} sec以内 ／ メモリ: {problemData.memory_limit} MB以内 （正解者数: {problemData.accepted_count} 名）</p>
       </div>
 
       {/* Problem Statement */}
