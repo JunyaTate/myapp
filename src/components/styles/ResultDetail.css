@@ -31,3 +31,27 @@
     height: calc(60vh - 30%);
     overflow: hidden;
 }
+
+
+.result-details-container summary {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.result-details-container details {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #4d5362;
+    border-radius: 5px;
+}
+
+.result-details-container details > div {
+    margin: 15px;
+}
+
+.result-details-container summary:hover {
+    background-color: #4d5362;
+    cursor: pointer;
+}
