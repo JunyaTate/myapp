@@ -80,11 +80,12 @@ const Problem = memo(() => {
               <CodeBlock className={className} children={children} />
             ),
           }}
+          urlTransform={value => value}
         >
           {problemData.statement}
         </ReactMarkdown>
       </div>
-    </div>
+    </div >
   );
 });
 
