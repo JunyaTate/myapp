@@ -1,4 +1,5 @@
-import React, { useContext, useState } from 'react';
+import Cookies from 'js-cookie';
+import React, { useContext, useEffect, useState } from 'react';
 import AceEditor from 'react-ace';
 import settingIcon from '../images/settingicon.png';
 import { fontSizeContext, modeContext, tabSizeContext, themeContext } from './ParamProvider';
@@ -10,6 +11,13 @@ const Editor = ({ checkAuthentication, code, setCode }) => {
     const { fontSize, setFontSize } = useContext(fontSizeContext);
     const { tabSize, setTabSize } = useContext(tabSizeContext);
     const [showSettings, setShowSettings] = useState(false);
+
+    useEffect(() => {
+        const storedLanguage = Cookies.get('language');
+        if (storedLanguage) {
+            setMode(storedLanguage);
+        }
+    }, [setMode]);
 
     const handleFontSizeIncrease = () => {
         setFontSize(prevFontSize => Math.min(prevFontSize + 1, 99));
@@ -57,8 +65,9 @@ const Editor = ({ checkAuthentication, code, setCode }) => {
                     <img src={settingIcon} alt="設定" />
                 </button>
                 <select className="editor-mode-select" onChange={handleModeChange} value={mode}>
-                    <option value="python">Python</option>
-                    <option value="java">Java</option>
+                    <option value="python">Python 3.8.1</option>
+                    <option value="java">Java 13</option>
+                    <option value="c_cpp">C++ (GCC 9.2.0)</option>
                 </select>
             </div>
 
@@ -93,10 +102,10 @@ const Editor = ({ checkAuthentication, code, setCode }) => {
                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
                                 <span>テーマ:</span>
                                 <select value={theme} onChange={handleThemeChange} className='editor-mode-select'>
-                                    <option value="monokai">monokai</option>
-                                    <option value="solarized_dark">solarized_dark</option>
-                                    <option value="solarized_light">solarized_light</option>
-                                    <option value="github">github</option>
+                                    <option value="monokai">Monokai</option>
+                                    <option value="solarized_dark">Solarized Dark</option>
+                                    <option value="solarized_light">Solarized Light</option>
+                                    <option value="github">Github</option>
                                 </select>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
