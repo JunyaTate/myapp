@@ -17,6 +17,7 @@ import './components/styles/Results.css';
 // AceEditorに必要なライブラリをインポート
 import 'ace-builds/src-noconflict/ace';
 
+import 'ace-builds/src-noconflict/mode-c_cpp';
 import 'ace-builds/src-noconflict/mode-java';
 import 'ace-builds/src-noconflict/mode-python';
 
@@ -43,7 +44,7 @@ function App() {
                   <Link to="/learn">&lt;</Link> {/* Learnへのリンク */}
                 </span>
                 <h1>AIbleCode</h1>
-                <p><img src={Logo} alt="AIbleCode" className='header-logo'/></p>
+                <p><img src={Logo} alt="AIbleCode" className='header-logo' /></p>
               </header>
               <SelectedTabProvider>
                 <ModeProvider>

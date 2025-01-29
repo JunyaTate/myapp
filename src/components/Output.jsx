@@ -18,7 +18,7 @@ const Output = ({ code, checkAuthentication }) => {
 
     const handleRun = async () => {
         const requestBody = {
-            language: mode === "python" ? "Python" : "Java",
+            language: mode === "python" ? "Python" : mode === "java" ? "Java" : "C++",
             code: code,
             input: input,
         };
@@ -66,7 +66,7 @@ const Output = ({ code, checkAuthentication }) => {
 
     const handleSubmit = async () => {
         const requestBody = {
-            language: mode === "python" ? "Python" : "Java",
+            language: mode === "python" ? "Python" : mode === "java" ? "Java" : "C++",
             code: code,
         };
 
