@@ -32,41 +32,41 @@ import { FontSizeProvider, ModeProvider, SelectedTabProvider, TabSizeProvider, T
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/* メインページ */}
-        <Route
-          path="/problem/:categoryId/:problemId"
-          element={
-            <div className="App"> {/*ヘッダー部分だけここで書いてます。ヘッダー下の要素はAceEditorComponentに書いてます*/}
-              <header className="App-header">
-                <span className="header-back-button">
-                  <Link to="/learn">&lt;</Link> {/* Learnへのリンク */}
-                </span>
-                <h1>AIbleCode</h1>
-                <p><img src={Logo} alt="AIbleCode" className='header-logo' /></p>
-              </header>
-              <SelectedTabProvider>
-                <ModeProvider>
-                  <ThemeProvider>
-                    <FontSizeProvider>
-                      <TabSizeProvider>
+    <ModeProvider>
+      <ThemeProvider>
+        <FontSizeProvider>
+          <TabSizeProvider>
+            <Router>
+              <Routes>
+                {/* メインページ */}
+                <Route
+                  path="/problem/:categoryId/:problemId"
+                  element={
+                    <div className="App"> {/*ヘッダー部分だけここで書いてます。ヘッダー下の要素はAceEditorComponentに書いてます*/}
+                      <header className="App-header">
+                        <span className="header-back-button">
+                          <Link to="/learn">&lt;</Link> {/* Learnへのリンク */}
+                        </span>
+                        <h1>AIbleCode</h1>
+                        <p><img src={Logo} alt="AIbleCode" className='header-logo' /></p>
+                      </header>
+                      <SelectedTabProvider>
                         <AceEditorComponent />
-                      </TabSizeProvider>
-                    </FontSizeProvider>
-                  </ThemeProvider>
-                </ModeProvider>
-              </SelectedTabProvider>
-            </div>
-          }
-        />
-        {/* Learnページ */}
-        <Route path="/learn" element={<Learn />} />
-        {/* Loginページ */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Navigate replace to="/learn" />} />
-      </Routes>
-    </Router>
+                      </SelectedTabProvider>
+                    </div>
+                  }
+                />
+                {/* Learnページ */}
+                <Route path="/learn" element={<Learn />} />
+                {/* Loginページ */}
+                <Route path="/login" element={<Login />} />
+                <Route path="/" element={<Navigate replace to="/learn" />} />
+              </Routes>
+            </Router>
+          </TabSizeProvider>
+        </FontSizeProvider>
+      </ThemeProvider>
+    </ModeProvider>
   );
 }
 

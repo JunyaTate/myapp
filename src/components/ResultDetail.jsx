@@ -7,13 +7,12 @@ import AiComponent from "./Ai";
 import Loading from "./Loading";
 import { getStatusInfo, mapStatus } from "./Results";
 
-import { fontSizeContext, modeContext, tabSizeContext, themeContext } from "./ParamProvider";
+import { fontSizeContext, tabSizeContext, themeContext } from "./ParamProvider";
 
 const ResultDetail = ({ submissionId }) => {
     const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const { mode } = useContext(modeContext);
     const { theme } = useContext(themeContext);
     const { fontSize } = useContext(fontSizeContext);
     const { tabSize } = useContext(tabSizeContext);
@@ -76,7 +75,10 @@ const ResultDetail = ({ submissionId }) => {
                     <h3>コード</h3>
                     <div className="ace-editor-wrapper">
                         <AceEditor
-                            mode={mode}
+                            mode={
+                                result.language === "Python" ? "python" :
+                                    result.language === "Java" ? "java" : "c_cpp"
+                            }
                             theme={theme}
                             value={result.code}
                             name={`Code-${submissionId}`}
